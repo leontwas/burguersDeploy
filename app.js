@@ -1,3 +1,3 @@
-import Server from "./server/Server.js" 
+import Server from "./server/Server.js";
 
-Server.run(process.env.PORT || 3000)
+Server.run(process.env.PORT || 3000);
