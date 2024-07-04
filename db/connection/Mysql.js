@@ -1,20 +1,21 @@
-import mysql from 'mysql2'
-import config from '../config/mysql.config.js'
+import mysql from 'mysql2';
+import config from '../config/mysql.config.js';
 
 export default class Mysql {
-
     constructor() {
-        this.connection = mysql.createPool(config)
-        this.connection = mysql.createConnection(config)
-        this.tryConnection()
+        this.pool = mysql.createPool(config);
+        this.tryConnection();
     }
 
     tryConnection() {
-        this.connection.connect(err => {
-            err
-                ? console.error('No se pudo conectar a la DB')
-                : console.log('Conectado a la DB')
-        })
+        this.pool.getConnection((err, connection) => {
+            if (err) {
+                console.error('No se pudo conectar a la DB:', err);
+                throw err;
+            } else {
+                console.log('Conectado a la DB');
+                connection.release();
+            }
+        });
     }
-
 }
