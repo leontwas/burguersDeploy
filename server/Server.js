@@ -7,6 +7,11 @@ import PedidosRoutes from '../routes/pedidos.routes.js';
 export default class Server {
     static app = express();
 
+    static middlewares(){
+        Server.app.use(express.json())
+        Server.app.use(express.urlencoded({ extended: true }))
+    }
+
     static routes() {
         const reservas = new ReservasRoutes();
         const productos = new ProductosRoutes();
@@ -30,6 +35,7 @@ export default class Server {
 
     static run(port) {
         console.clear();
+        Server.middlewares();
         Server.routes();
         Server.runServer(port);
     }

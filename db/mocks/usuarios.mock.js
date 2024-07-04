@@ -35,3 +35,5 @@ const mock = [
         pass: 'vkdL#4958'
     },
 ]
+
+export default mock

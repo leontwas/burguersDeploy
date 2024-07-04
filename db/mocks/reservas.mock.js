@@ -59,3 +59,5 @@ const mock = [
     menores: false
 }
 ]
+
+export default mock

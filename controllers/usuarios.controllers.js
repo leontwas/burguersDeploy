@@ -1,14 +1,16 @@
+import usuariosMock from '../db/mocks/usuarios.mock.js'
 export default class UsuariosControllers {
 
-    constructor(){
-
+    constructor() {
+        this.usuarios = usuariosMock
     }
 
     getAllUsuarios = (req, res) => {
-            res.send('get usuarios desde controllers');
+        res.json(this.usuarios)
         }
 
     createUsuarios = (req, res) => {
+        console.log(req.body)
         res.send('post usuarios desde controllers');
     } 
     
