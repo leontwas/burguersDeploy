@@ -1,6 +1,5 @@
 export default class Reservas {
-
-        constructor(id, nombre, apellido, telefono, email, fecha, comensales, foto, menores) {
+        constructor(id, nombre, apellido, telefono, email, fecha, comensales, menores) {
           this.id = id;
           this.nombre = nombre;
           this.apellido = apellido;
