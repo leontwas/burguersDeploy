@@ -19,5 +19,6 @@ const mock = [
         precio: 3600,
         cantidad: 1  
     },
-
 ]
+
+export default mock
