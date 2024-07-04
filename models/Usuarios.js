@@ -3,7 +3,7 @@ export default class Usuarios {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
-        this,direccion = direccion;
+        this.direccion = direccion;
         this.telefono = telefono;
         this.email = email;
     }
