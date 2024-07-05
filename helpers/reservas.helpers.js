@@ -1,4 +1,4 @@
-import Reservas from '../models/Reservas.js';
+import Reservas from '../models/Reserva.js';
 
 export default class ReservasHelpers {
     parseReservas(data) {

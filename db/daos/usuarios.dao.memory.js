@@ -1,6 +1,5 @@
 import usuariosMock from '../mocks/usuarios.mock.js'
 
-
 export default class UsuariosDaoMemory {
 
     constructor() {
