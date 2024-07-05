@@ -10,10 +10,10 @@ export default class Mysql {
     tryConnection() {
         this.pool.getConnection((err, connection) => {
             if (err) {
-                console.error('No se pudo conectar a la DB:', err);
+                console.error('No se pudo conectar a la Base de Datos:', err);
                 throw err;
             } else {
-                console.log('Conectado a la DB');
+                console.log('Conectado a la Base de Datos MySQL');
                 connection.release();
             }
         });
