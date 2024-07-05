@@ -18,7 +18,7 @@
     <style>
         main {
             background: rgb(88, 0, 0);
-            color: white);
+            color: rgb(3, 162, 46);
         }
 
         section {
@@ -104,7 +104,7 @@
                 </div>
                 <div class="form-check mb-3">
                     <input type="checkbox" class="form-check-input" id="menores">
-                    <label class="form-check-label" for="menores">Hay menores?</label>
+                    <label class="form-check-label text-white" for="menores">Hay menores?</label>
                 </div>
                 <div class="botonera">
                     <button type="reset" class="btn btn-primary">Limpiar</button>
@@ -116,9 +116,9 @@
             <br>
             <img src="./assets/Imagenes/reservas/reservado.png" alt="reservado.png">
         </div>
-        <section class="bg-black bg-opacity-25 p-5">       
+        <section class="bg-black bg-opacity-25 p-5">
             <h1 class="kalam-bold text-warning">Cancelar Reserva:</h1>
-            <section class="bg-black bg-opacity-25 p-5"> 
+            <br>
             <form action="./cancelar_reserva" method="POST">
                 <div class="form-group">
                     <label for="cancel-email">Correo electrónico</label>
@@ -132,7 +132,6 @@
                     <button type="submit" class="btn btn-danger">Cancelar</button>
                 </div>
             </form>
-        </section>
         </section>
     </div>
 </main>
@@ -153,4 +152,3 @@
 <script src="./assets/js/validaciones.js"></script>
 </body>
 </html>
-
