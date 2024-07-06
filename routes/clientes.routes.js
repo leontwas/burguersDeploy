@@ -16,7 +16,7 @@ export default class ClientesRoutes extends Routes {
             .get('/', this.controller.getAllClientes)
             .get('/id', this.controller.getClienteById)
             .post('/', this.controller.createCliente)
-            .put('/', this.controller.updateCliente)
-            .delete('/', this.controller.deleteCliente)      
+            .put('/id', this.controller.updateCliente)
+            .delete('/id', this.controller.deleteCliente)      
     }
 }

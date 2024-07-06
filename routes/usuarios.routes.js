@@ -15,7 +15,7 @@ export default class UsuariosRoutes extends Routes {
             .get('/', this.controller.getAllUsuarios)
             .get('/id', this.controller.getUsuarioById)
             .post('/', this.controller.createUsuarios)
-            .put('/', this.controller.updateUsuarios)
-            .delete('/', this.controller.deleteUsuarios)      
+            .put('/id', this.controller.updateUsuarios)
+            .delete('/id', this.controller.deleteUsuarios)      
     }
 }
