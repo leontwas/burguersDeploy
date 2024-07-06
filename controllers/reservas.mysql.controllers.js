@@ -1,4 +1,4 @@
-import Reserva from '../models/Reserva.js';
+import { crearNuevaReserva } from '../helpers/reservas.helpers'; // Importa la función helper para crear reservas
 
 export default class ReservasMySQLControllers {
 
@@ -6,8 +6,10 @@ export default class ReservasMySQLControllers {
   }
 
   crearReserva = (req, res) => {
-    const { nombre, apellido, telefono, email, fecha, comensales, menores } = req.body;
-    const nuevaReserva = new Reserva(null, nombre, apellido, telefono, email, fecha, comensales, menores); // cliente_id será generado automáticamente por la base de datos
+    const { cliente_id, mesa_id, fecha_reserva, estado } = req.body; // Obtén los datos de la reserva del cuerpo de la solicitud
+
+    const nuevaReserva = crearNuevaReserva({ cliente_id, mesa_id, fecha_reserva, estado });
+
     const query = 'INSERT INTO reservas SET ?';
 
     connection.query(query, nuevaReserva, (error, results) => {
@@ -16,11 +18,10 @@ export default class ReservasMySQLControllers {
         res.status(500).json({ message: 'Error al crear reserva' });
         return;
       }
-
-      nuevaReserva.cliente_id = results.insertId;
-      res.status(201).json(nuevaReserva);
+      res.status(200).json({ message: 'Reserva creada exitosamente' });
     });
-  };
+  }
+}
 
   modificarReserva = (req, res) => {
     const { id } = req.params;
@@ -107,4 +108,4 @@ export default class ReservasMySQLControllers {
       res.status(200).json(results);
     });
   };
-}
+

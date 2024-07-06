@@ -1,18 +1,14 @@
 import Reservas from '../models/Reserva.js';
 
 export default class ReservasHelpers {
-    parseReservas(data) {
-        console.log("Datos recibidos en parseReservas:", data); 
-        if (!data || typeof data !== 'object') {
-            throw new Error("Datos inválidos para parseReservas");
-        }
+  parseReserva(datosReserva) {
+    const { nombre, apellido, telefono, email, fecha, comensales, menores } = datosReserva;
 
-        const { id, nombre, apellido, telefono, mail, fecha, comensales, menores } = data;
-        console.log("Datos desestructurados en parseUsuarios:", id, nombre, apellido, telefono, mail, fecha, comensales, menores); 
+    // Puedes implementar lógica adicional aquí, como validar datos o ajustar valores antes de crear la reserva
 
-        const reserva = new Reservas(parseInt(id), nombre, apellido, telefono, mail, parseDate(fecha), comensales, menores);
-        console.log("Instancia de Usuarios en parseUsuarios:", reserva); 
+    // Crear una instancia de Reserva
+    const nuevaReserva = new Reservas(null, nombre, apellido, telefono, email, fecha, comensales, menores);
 
-        return reserva;
-    }
+    return nuevaReserva;
+}
 }

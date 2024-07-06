@@ -8,5 +8,6 @@ export default class Reserva {
     this.fecha = fecha;
     this.comensales = comensales;
     this.menores = menores;
-  }
+    this.estado = 'Pendiente'; // Estado por defecto al crear la reserva
+}
 }
