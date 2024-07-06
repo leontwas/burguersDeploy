@@ -12,9 +12,11 @@ export default class ReservasRoutes extends Routes {
 
     getRoutes() {
         this.router
-        .get('/', this.controller.getAllReservas)
-        .post('/', this.controller.createReservas)
-        .put('/', this.controller.updateReservas)
-        .delete('/', this.controller.deleteReservas)      
+        .get('/', this.controller.buscarReservaPorApellido)
+        .get('/', this.controller.buscarReservaPorEmail)
+        .get('/', this.controller.buscarReservaPorFecha)
+        .post('/', this.controller.crearReserva)
+        .put('/', this.controller.modificarReserva)
+        .delete('/', this.controller.eliminarReserva)      
     }
 }
