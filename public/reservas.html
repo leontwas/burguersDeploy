@@ -18,7 +18,7 @@
     <style>
         main {
             background: rgb(88, 0, 0);
-            color: white;
+            color: rgb(3, 162, 46);
         }
 
         section {
@@ -28,6 +28,13 @@
         img {
             height: 100%;
             object-fit: cover;
+        }
+
+        .form-container {
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -51,7 +58,7 @@
     </div>
     <div class="contenedor">
         <section class="bg-black bg-opacity-75 text-black p-5">
-            <form enctype="multipart/form-data" action="./reservas" method="POST">
+            <form class="form-container" enctype="multipart/form-data" action="./reservas" method="POST">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" required />
@@ -116,10 +123,10 @@
             <br>
             <img src="./assets/Imagenes/reservas/reservado.png" alt="reservado.png">
         </div>
-        <section class="bg-black bg-opacity-25 p-5">       
+        <section class="bg-black bg-opacity-25 p-5">
             <h1 class="kalam-bold text-warning">Cancelar Reserva:</h1>
-            <section class="bg-black bg-opacity-25 p-5"> 
-            <form action="./cancelar_reserva" method="POST">
+            <br>
+            <form class="form-container" action="./cancelar_reserva" method="POST">
                 <div class="form-group">
                     <label for="cancel-email">Correo electrónico</label>
                     <input name="email" type="email" class="form-control" id="cancel-email" placeholder="Correo electrónico" required />
@@ -132,7 +139,6 @@
                     <button type="submit" class="btn btn-danger">Cancelar</button>
                 </div>
             </form>
-        </section>
         </section>
     </div>
 </main>
@@ -153,4 +159,3 @@
 <script src="./assets/js/validaciones.js"></script>
 </body>
 </html>
-
