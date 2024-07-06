@@ -16,6 +16,5 @@ export default class PedidosRoutes extends Routes {
         .post('/', this.controller.createPedidos)
         .put('/', this.controller.updatePedidos)
         .delete('/', this.controller.deletePedidos)
-       
     }
 }
