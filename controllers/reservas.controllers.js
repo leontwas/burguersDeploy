@@ -1,8 +1,8 @@
 import reservasMock from '../db/mocks/reservas.mock.js';
 import ReservasHelpers from '../helpers/reservas.helpers.js';
-import Reserva from '../models/Reserva.js'; // Asumiendo que tienes un modelo de Reserva definido
+import Reserva from '../models/Reserva.js'; 
 
-let reservas = reservasMock; // Suponiendo que reservasMock es un arreglo inicial de reservas
+let reservas = reservasMock; 
 
 export default class ReservasControllers {
 

@@ -15,8 +15,8 @@ export default class ReservasRoutes extends Routes {
         .get('/', this.controller.buscarReservaPorApellido)
         .get('/', this.controller.buscarReservaPorEmail)
         .get('/', this.controller.buscarReservaPorFecha)
-        .post('/', this.controller.crearReserva)
-        .put('/', this.controller.modificarReserva)
-        .delete('/', this.controller.eliminarReserva)      
+        .post('/', this.controller.createReserva)
+        .put('/', this.controller.updateReserva)
+        .delete('/', this.controller.deleteReserva)      
     }
 }
