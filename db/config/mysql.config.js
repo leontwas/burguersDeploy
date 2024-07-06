@@ -3,7 +3,7 @@ const config = {
     port: 3306,
     user: 'root',
     password: '',
-    database: 'gloriosaburguers'
+    database: 'hamburgueseria'
 };
 
 export default config;

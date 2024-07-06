@@ -9,8 +9,6 @@ export default class ReservasControllers {
         this.helpers = new ReservasHelpers()
     }
 
-
-
  crearReserva = (req, res) => {
   const { cliente_id, nombre, apellido, telefono, email, fecha, comensales, menores } = req.body;
   const nuevaReserva = new Reserva(cliente_id, nombre, apellido, telefono, email, fecha, comensales, menores);
