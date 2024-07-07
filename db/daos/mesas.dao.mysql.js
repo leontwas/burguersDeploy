@@ -14,11 +14,13 @@ class MesasDaoMysql {
 
     async #createTable() {
         try {
-        const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
-        mesa_id INT PRIMARY KEY AUTO_INCREMENT,
-        numero INT NOT NULL,
-        capacidad INT NOT NULL
-    )`
+
+        const query = `CREATE TABLE IF NOT EXISTS mesas (
+                mesa_id INT AUTO_INCREMENT PRIMARY KEY,
+                numero INT NOT NULL,
+                capacidad INT NOT NULL,
+                disponible BOOLEAN DEFAULT TRUE
+            )`
             await this.mysql.query(query)
             console.log("Tabla creada o ya existente.")
         } catch (error) {
@@ -29,7 +31,7 @@ class MesasDaoMysql {
 
     async getAllMesas() {
         try {
-            const [results] = await this.mysql.query(`SELECT * FROM ${this.table}`)
+            const [results] = await this.mysql.query(`SELECT * FROM mesas`)
             return results
         } catch (err) {
             throw err
@@ -38,27 +40,28 @@ class MesasDaoMysql {
 
     async getMesasById(mesa_id) {
         try {
-            const [results] = await this.mysql.query(`SELECT * FROM ${this.table} WHERE mesa_id = ?`, [mesa_id])
+            const [results] = await this.mysql.query(`SELECT * FROM mesas WHERE mesa_id = ?`, [mesa_id])
             return results[0]
         } catch (err) {
             throw err
         }
     }
 
-    async createMesa(numero, capacidad) {
+    async createMesa(numero, capacidad, disponible) {
         try {
-            const client = { numero, capacidad };
-            const [result] = await this.mysql.query(`INSERT INTO ${this.table} SET ?`, mesa );
-            return result.insertId;
+            const mesa = { numero, capacidad, disponible };
+            const [result] = await this.mysql.query(`INSERT INTO mesas SET ?`, mesa);
+            return result.insertId; 
         } catch (err) {
-            throw err;
+            console.error('Error al crear la mesa:', err); 
+            throw err; 
         }
     }
-
-    async updateMesas(mesa_id, numero, capacidad) {
+    
+    async updateMesas(mesa_id, numero, capacidad, disponible) {
         try {
             const [result] = await this.query
-            (`UPDATE ${this.table} SET numero = ?, capacidad = ? WHERE mesa_id = ?`, [numero, capacidad, mesa_id])
+            (`UPDATE mesas SET numero = ?, capacidad = ?,  disponible = ? WHERE mesa_id = ?`, [numero, capacidad, disponible, mesa_id])
             return result.affectedRows
         } catch (err) {
             throw err
@@ -67,7 +70,7 @@ class MesasDaoMysql {
 
     async deleteMesa(mesa_id) {
         try {
-            const [result] = await this.mysql.query(`DELETE FROM ${this.table} WHERE mesa_id = ?`, [mesa_id])
+            const [result] = await this.mysql.query(`DELETE FROM mesas WHERE mesa_id = ?`, [mesa_id])
             return result.affectedRows
         } catch (err) {
             throw err

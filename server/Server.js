@@ -1,8 +1,8 @@
 import express from 'express';
 import ReservasRoutes from '../routes/reservas.routes.js';
 import ProductosRoutes from '../routes/productos.routes.js';
-import UsuariosRoutes from '../routes/usuarios.routes.js';
-import PedidosRoutes from '../routes/pedidos.routes.js';
+import ClientesRoutes from '../routes/clientes.routes.js';
+import MesasRoutes from '../routes/mesas.routes.js';
 
 export default class Server {
     static app = express();
@@ -15,12 +15,12 @@ export default class Server {
     static routes() {
         const reservas = new ReservasRoutes();
         const productos = new ProductosRoutes();
-        const usuarios = new UsuariosRoutes();
-        const pedidos = new PedidosRoutes();
+        const clientes = new ClientesRoutes();
+        const mesas = new MesasRoutes();
         Server.app.use('/reservas', reservas.router);
         Server.app.use('/productos', productos.router);
-        Server.app.use('/usuarios', usuarios.router);
-        Server.app.use('/pedidos', pedidos.router);
+        Server.app.use('/clientes', clientes.router);
+        Server.app.use('/mesas', mesas.router);
     }
 
     static runServer(port) {
