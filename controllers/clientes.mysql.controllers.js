@@ -9,7 +9,7 @@ export default class ClientesDaoMysql extends Mysql {
     }
 
     #createTable() {
-        const query = `CREATE TABLE IF NOT EXISTS ${this.table}(
+        const query = `CREATE TABLE IF NOT EXISTS clientes(
             cliente_id INT PRIMARY KEY AUTO_INCREMENT,
             nombre VARCHAR(100) NOT NULL,
             apellido VARCHAR(100) NOT NULL,
@@ -21,7 +21,7 @@ export default class ClientesDaoMysql extends Mysql {
 
     async getAllClientes() {
         try {
-            const query = `SELECT * FROM ${this.table}`;
+            const query = `SELECT * FROM clientes`;
             const [result] = await this.connection.promise().query(query);
             return result;
         } catch (err) {
@@ -32,7 +32,7 @@ export default class ClientesDaoMysql extends Mysql {
 
     async getClienteById(id) {
         try {
-            const query = `SELECT * FROM ${this.table} WHERE cliente_id = ?`;
+            const query = `SELECT * FROM clientes WHERE cliente_id = ?`;
             const [result] = await this.connection.promise().query(query, [id]);
             return result[0];
         } catch (err) {
@@ -44,7 +44,7 @@ export default class ClientesDaoMysql extends Mysql {
     async addCliente(cliente) {
         try {
             const { nombre, apellido, telefono, email } = cliente;
-            const query = `INSERT INTO ${this.table} (nombre, apellido, telefono, email) VALUES (?, ?, ?, ?)`;
+            const query = `INSERT INTO clientes (nombre, apellido, telefono, email) VALUES (?, ?, ?, ?)`;
             const [result] = await this.connection.promise().query(query, [nombre, apellido, telefono, email]);
             return result;
         } catch (err) {
@@ -56,7 +56,7 @@ export default class ClientesDaoMysql extends Mysql {
     async updateCliente(cliente) {
         try {
             const { cliente_id, nombre, apellido, telefono, email } = cliente;
-            const query = `UPDATE ${this.table} SET nombre = ?, apellido = ?, telefono = ?, email = ? WHERE cliente_id = ?`;
+            const query = `UPDATE clientes SET nombre = ?, apellido = ?, telefono = ?, email = ? WHERE cliente_id = ?`;
             const [result] = await this.connection.promise().query(query, [nombre, apellido, telefono, email, cliente_id]);
             return result;
         } catch (err) {
@@ -67,7 +67,7 @@ export default class ClientesDaoMysql extends Mysql {
 
     async deleteCliente(id) {
         try {
-            const query = `DELETE FROM ${this.table} WHERE cliente_id = ?`;
+            const query = `DELETE FROM clientes WHERE cliente_id = ?`;
             const [result] = await this.connection.promise().query(query, [id]);
             return result;
         } catch (err) {
@@ -78,7 +78,7 @@ export default class ClientesDaoMysql extends Mysql {
 
     async getClientesByNombre(nombre) {
         try {
-            const query = `SELECT * FROM ${this.table} WHERE nombre LIKE ?`;
+            const query = `SELECT * FROM clientes WHERE nombre LIKE ?`;
             const [result] = await this.connection.promise().query(query, [`%${nombre}%`]);
             return result;
         } catch (err) {
@@ -89,7 +89,7 @@ export default class ClientesDaoMysql extends Mysql {
 
     async getClientesByEmail(email) {
         try {
-            const query = `SELECT * FROM ${this.table} WHERE email = ?`;
+            const query = `SELECT * FROM clientes WHERE email = ?`;
             const [result] = await this.connection.promise().query(query, [email]);
             return result;
         } catch (err) {

@@ -9,7 +9,7 @@ export default class MesasDaoMysql extends Mysql {
     }
 
     #createTable() {
-        const query = `CREATE TABLE IF NOT EXISTS ${this.table}(
+        const query = `CREATE TABLE IF NOT EXISTS mesas(
             mesa_id INT PRIMARY KEY AUTO_INCREMENT,
             numero INT NOT NULL,
             capacidad INT NOT NULL,
@@ -20,7 +20,7 @@ export default class MesasDaoMysql extends Mysql {
 
     async getAllMesas() {
         try {
-            const query = `SELECT * FROM ${this.table}`;
+            const query = `SELECT * FROM mesas`;
             const [result] = await this.connection.promise().query(query);
             return result;
         } catch (err) {
@@ -31,7 +31,7 @@ export default class MesasDaoMysql extends Mysql {
 
     async getMesaById(id) {
         try {
-            const query = `SELECT * FROM ${this.table} WHERE mesa_id = ?`;
+            const query = `SELECT * FROM mesas WHERE mesa_id = ?`;
             const [result] = await this.connection.promise().query(query, [id]);
             return result[0];
         } catch (err) {
@@ -43,7 +43,7 @@ export default class MesasDaoMysql extends Mysql {
     async addMesa(mesa) {
         try {
             const { mesa_id, numero, capacidad, ubicacion } = mesa;
-            const query = `INSERT INTO ${this.table} (mesa_id, numero, capacidad, ubicacion) VALUES (?, ?, ?, ?)`;
+            const query = `INSERT INTO mesas (mesa_id, numero, capacidad, ubicacion) VALUES (?, ?, ?, ?)`;
             const [result] = await this.connection.promise().query(query, [mesa_id, numero, capacidad, ubicacion]);
             return result;
         } catch (err) {
@@ -55,7 +55,7 @@ export default class MesasDaoMysql extends Mysql {
     async updateMesa(mesa) {
         try {
             const { mesa_id, numero, capacidad, ubicacion } = mesa;
-            const query = `UPDATE ${this.table} SET numero = ?, capacidad = ?, ubicacion = ? WHERE mesa_id = ?`;
+            const query = `UPDATE mesas SET numero = ?, capacidad = ?, ubicacion = ? WHERE mesa_id = ?`;
             const [result] = await this.connection.promise().query(query, [numero, capacidad, ubicacion, mesa_id]);
             return result;
         } catch (err) {
@@ -66,7 +66,7 @@ export default class MesasDaoMysql extends Mysql {
 
     async deleteMesa(id) {
         try {
-            const query = `DELETE FROM ${this.table} WHERE mesa_id = ?`;
+            const query = `DELETE FROM mesas WHERE mesa_id = ?`;
             const [result] = await this.connection.promise().query(query, [id]);
             return result;
         } catch (err) {
