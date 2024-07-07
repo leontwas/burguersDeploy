@@ -1,4 +1,4 @@
-import Mysql from '../connections/Mysql.js';
+import Mysql from '../db/connection/Mysql.js';
 
 export default class MesasDaoMysql extends Mysql {
 

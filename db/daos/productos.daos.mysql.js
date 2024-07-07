@@ -14,7 +14,7 @@ class ProductosDaoMysql {
 
     async #createTable() {
         try {
-        const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
+        const query = `CREATE TABLE IF NOT EXISTS productos (
         producto_id INT PRIMARY KEY AUTO_INCREMENT,
         nombre VARCHAR(100) NOT NULL,
         descripcion TEXT,
@@ -31,7 +31,7 @@ class ProductosDaoMysql {
 
     async getAllProductos() {
         try {
-            const [results] = await this.mysql.query(`SELECT * FROM ${this.table}`)
+            const [results] = await this.mysql.query(`SELECT * FROM productos`)
             return results
         } catch (err) {
             throw err
