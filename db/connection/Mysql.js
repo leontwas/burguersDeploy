@@ -1,9 +1,9 @@
 import mysql from 'mysql2';
 import config from '../config/mysql.config.js';
 
-export default class Mysql {
+class Mysql {
     constructor() {
-        this.pool = mysql.createPool(config);
+        this.pool = mysql.createPool(config).promise();
         this.tryConnection();
     }
 
@@ -18,4 +18,13 @@ export default class Mysql {
             }
         });
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Mysql();
+        }
+        return this.instance;
+    }
 }
+
+export default Mysql;
