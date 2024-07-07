@@ -58,8 +58,7 @@ margin-bottom: 20px;
     </div>
     <div class="contenedor">
         <section class="bg-black bg-opacity-75 text-black p-5">
-            <form class="form-container text-white" id="crearReservaForm" enctype="multipart/form-data"> <!-- acá va el action = "/ruta" -->
-                <div class="form-group">
+            <form class="form-container text-white" id="crearReservaForm" enctype="multipart/form-data"> 
                     <label for="nombre">Nombre</label>
                     <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" required />
                 </div>
@@ -115,7 +114,7 @@ margin-bottom: 20px;
                 </div>
                 <div class="botonera">
                     <button type="reset" class="btn btn-primary">Limpiar</button>
-                    <button type="submit" class="btn btn-success">Reservar</button>
+                    <button type="submit" class="btn btn-success" action="./Reservas" method="POST">Reservar</button>
                 </div>
             </form>
         </section>
@@ -124,7 +123,7 @@ margin-bottom: 20px;
             <img src="./assets/Imagenes/reservas/reservado.png" alt="reservado.png">
         </div>
         <section class="bg-black bg-opacity-25 p-5">
-            <h1 class="kalam-bold text-warning">Cancelar Reserva:</h1>
+            <h1 class="kalam-bold text-warning" action="./Reservas" method="delete">Cancelar Reserva:</h1>
             <br>
             <form class="form-container" id="cancelarReservaForm">
                 <div class="form-group text-white">
