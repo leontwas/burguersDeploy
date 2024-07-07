@@ -1,9 +1,9 @@
 const config = {
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: '',
-    database: 'hamburgueseria'
+    host: 'ed9.h.filess.io',
+    port: 3307,
+    user: 'hamburgueseria_ranchpetby',
+    password: 'e40b1e8aaf094b7c2d5b2b0cdbedabdc98560959',
+    database: 'hamburgueseria_ranchpetby'
 };
 
 export default config;
