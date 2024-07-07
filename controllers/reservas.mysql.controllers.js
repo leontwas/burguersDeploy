@@ -1,4 +1,4 @@
-import connection from '../db/connection';  
+import connection from '../db/connection/Mysql.js';  
 import ReservasHelpers from '../helpers/reservas.helpers.js';
 
 export default class ReservasMySQLControllers {
