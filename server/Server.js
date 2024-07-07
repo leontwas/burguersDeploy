@@ -21,10 +21,6 @@ export default class Server {
         Server.app.use('/productos', productos.router);
         Server.app.use('/usuarios', usuarios.router);
         Server.app.use('/pedidos', pedidos.router);
-
-        Server.app.get('/', (req, res) => {
-            res.send('Hola');
-        });
     }
 
     static runServer(port) {

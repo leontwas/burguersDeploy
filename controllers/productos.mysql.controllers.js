@@ -1,14 +1,14 @@
-import Mysql from '../connections/Mysql.js';
+import Mysql from '../db/connection/Mysql.js'; // Ajustar la ruta según la ubicación real
 
 export default class ProductosDaoMysql extends Mysql {
 
     constructor() {
         super();
         this.table = 'productos';
-        this.#createTable();
+        this.#createTable(); // Llamar al método privado para crear la tabla al instanciar
     }
 
-    #createTable() {
+    #createTable = () => {
         const query = `CREATE TABLE IF NOT EXISTS ${this.table}(
             producto_id INT PRIMARY KEY,
             nombre VARCHAR(100) NOT NULL,
@@ -16,7 +16,13 @@ export default class ProductosDaoMysql extends Mysql {
             precio DECIMAL(10, 2) NOT NULL,
             stock INT NOT NULL
         )`;
-        this.connection.query(query);
+        this.connection.query(query, (error, result) => {
+            if (error) {
+                console.error('Error al crear la tabla de productos:', error);
+            } else {
+                console.log('Tabla de productos creada exitosamente');
+            }
+        });
     }
 
     async getAllProductos() {
