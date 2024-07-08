@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            margin-bottom: 20px;
+        }
+        .form-container input {
+            margin: 5px 0;
+            padding: 8px;
+            width: 100%;
+        }
+        .form-container button {
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Reservas</h1>
+
+    <div class="form-container">
+        <h2>Crear Reserva (POST)</h2>
+        <form id="createForm">
+            <input type="text" id="createClienteId" placeholder="ID Cliente" required>
+            <input type="text" id="createMesaId" placeholder="ID Mesa" required>
+            <input type="date" id="createFechaReserva" placeholder="Fecha Reserva" required>
+            <button type="submit">Crear Reserva</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Buscar Reserva (GET)</h2>
+        <form id="getForm">
+            <input type="text" id="getReservaId" placeholder="ID Reserva" required>
+            <button type="submit">Buscar Reserva</button>
+        </form>
+        <div id="getResult"></div>
+    </div>
+
+    <div class="form-container">
+        <h2>Modificar Reserva (PUT)</h2>
+        <form id="updateForm">
+            <input type="text" id="updateReservaId" placeholder="ID Reserva" required>
+            <input type="text" id="updateClienteId" placeholder="ID Cliente">
+            <input type="text" id="updateMesaId" placeholder="ID Mesa">
+            <input type="date" id="updateFechaReserva" placeholder="Fecha Reserva">
+            <input type="checkbox" id="updateEstado"> Activa
+            <button type="submit">Modificar Reserva</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Eliminar Reserva (DELETE)</h2>
+        <form id="deleteForm">
+            <input type="text" id="deleteReservaId" placeholder="ID Reserva" required>
+            <button type="submit">Eliminar Reserva</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('createForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const clienteId = document.getElementById('createClienteId').value;
+            const mesaId = document.getElementById('createMesaId').value;
+            const fechaReserva = document.getElementById('createFechaReserva').value;
+
+            const response = await fetch('/reservas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    cliente_id: clienteId,
+                    mesa_id: mesaId,
+                    fecha_reserva: fechaReserva,
+                    estado: true
+                })
+            });
+
+            const result = await response.json();
+            alert('Reserva creada: ' + JSON.stringify(result));
+        });
+
+        document.getElementById('getForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const reservaId = document.getElementById('getReservaId').value;
+
+            const response = await fetch(`/reservas/${reservaId}`);
+            const result = await response.json();
+            document.getElementById('getResult').textContent = JSON.stringify(result);
+        });
+
+        document.getElementById('updateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const reservaId = document.getElementById('updateReservaId').value;
+            const clienteId = document.getElementById('updateClienteId').value;
+            const mesaId = document.getElementById('updateMesaId').value;
+            const fechaReserva = document.getElementById('updateFechaReserva').value;
+            const estado = document.getElementById('updateEstado').checked;
+
+            const response = await fetch(`/reservas/${reservaId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    cliente_id: clienteId || undefined,
+                    mesa_id: mesaId || undefined,
+                    fecha_reserva: fechaReserva || undefined,
+                    estado: estado
+                })
+            });
+
+            const result = await response.json();
+            alert('Reserva modificada: ' + JSON.stringify(result));
+        });
+
+        document.getElementById('deleteForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const reservaId = document.getElementById('deleteReservaId').value;
+
+            const response = await fetch(`/reservas/${reservaId}`, {
+                method: 'DELETE'
+            });
+
+            const result = await response.json();
+            alert('Reserva eliminada: ' + JSON.stringify(result));
+        });
+    </script>
+
+</body>
+</html>
