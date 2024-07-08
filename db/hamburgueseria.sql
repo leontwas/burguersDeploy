@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-07-2024 a las 02:36:53
+-- Tiempo de generación: 08-07-2024 a las 02:32:54
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -38,6 +38,21 @@ CREATE TABLE `clientes` (
   `email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`cliente_id`, `nombre`, `apellido`, `direccion`, `telefono`, `email`) VALUES
+(1, 'Juan', 'Pérez', 'Av. Córdoba 6123 PB 3', '555-1234', 'juan.perez@example.com'),
+(2, 'María', 'González', 'Cabildo 232 CABA', '555-5678', 'maria.gonzalez@example.com'),
+(3, 'Carlos', 'López', 'Esmeralda 234 San Martín Bs As', '555-9012', 'carlos.lopez@example.com'),
+(4, 'Leonardo', 'Lipiejko', 'Santos Dumont 3310', '1121566870', 'leonardo_dl@hotmail.com'),
+(5, 'Ana', 'Martínez', 'Calle 34 y 135 Berazategui Bs As', '555-3456', 'ana.martinez@example.com'),
+(6, 'Sebastian', 'Toledo', 'Fitz Roy 3453, CABA', '1123546422', 'sebarecio@gmail.com'),
+(7, 'Maria', 'Lopez', 'Av. Corrientes 1234, CABA', '1134567890', 'maria.lopez@example.com'),
+(8, 'Carlos', 'Gomez', 'Santa Fe 5678, CABA', '1145678901', 'carlos.gomez@example.com'),
+(9, 'Lucia', 'Martinez', 'Av. Libertador 8765, CABA', '1156789012', 'lucia.martinez@example.com');
+
 -- --------------------------------------------------------
 
 --
@@ -47,8 +62,19 @@ CREATE TABLE `clientes` (
 CREATE TABLE `mesas` (
   `mesa_id` int(11) NOT NULL,
   `numero` int(11) NOT NULL,
-  `capacidad` int(11) NOT NULL
+  `capacidad` int(11) NOT NULL,
+  `disponible` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mesas`
+--
+
+INSERT INTO `mesas` (`mesa_id`, `numero`, `capacidad`, `disponible`) VALUES
+(1, 1, 4, 1),
+(2, 2, 2, 1),
+(3, 3, 6, 0),
+(4, 4, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -64,6 +90,16 @@ CREATE TABLE `productos` (
   `stock` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`producto_id`, `nombre`, `descripcion`, `precio`, `stock`) VALUES
+(1, 'Classic Beef Burger', 'Beef burger with lettuce, tomato, and special sauce', 8.99, 50),
+(2, 'BBQ Cheeseburger', 'Beef burger with cheddar cheese, caramelized onions, and BBQ sauce', 9.99, 40),
+(3, 'Vegetarian Falafel Burger', 'Falafel burger with lettuce, tomato, and avocado mayo', 7.99, 30),
+(4, 'Double Cheeseburger', 'Double beef burger with Swiss cheese and special sauce', 10.99, 35);
+
 -- --------------------------------------------------------
 
 --
@@ -77,6 +113,16 @@ CREATE TABLE `reservas` (
   `fecha_reserva` datetime NOT NULL,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reservas`
+--
+
+INSERT INTO `reservas` (`reserva_id`, `cliente_id`, `mesa_id`, `fecha_reserva`, `estado`) VALUES
+(1, 6, 1, '2024-07-07 21:29:02', 1),
+(2, 5, 2, '2024-07-07 21:29:02', 1),
+(3, 4, 3, '2024-07-07 21:29:02', 1),
+(4, 3, 4, '2024-07-07 21:29:02', 1);
 
 --
 -- Índices para tablas volcadas
@@ -117,25 +163,25 @@ ALTER TABLE `reservas`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `cliente_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cliente_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
-  MODIFY `mesa_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `mesa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `producto_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `producto_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `reserva_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `reserva_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas

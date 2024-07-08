@@ -1,4 +1,5 @@
 import Mysql from '../db/connection/Mysql.js';
+import MesasHelpers from '../helpers/mesas.helpers.js'; 
 
 export default class MesasDaoMysql extends Mysql {
 
@@ -6,6 +7,7 @@ export default class MesasDaoMysql extends Mysql {
         super();
         this.table = 'mesas';
         this.#createTable();
+        this.helpers = new MesasHelpers(); 
     }
 
     #createTable() {
@@ -24,7 +26,6 @@ export default class MesasDaoMysql extends Mysql {
             throw err; 
         }
     }
-    
 
     async getAllMesas() {
         try {
@@ -50,72 +51,59 @@ export default class MesasDaoMysql extends Mysql {
 
     async addMesa(mesa) {
         try {
-            mesa.disponible = true;
-    
-            const { mesa_id, numero, capacidad, disponible } = mesa;
-            const query = `INSERT INTO mesas (mesa_id, numero, capacidad, disponible) VALUES (?, ?, ?, ?)`;
-            const [result] = await this.connection.promise().query(query, [mesa_id, numero, capacidad, disponible]);
-    
+            const parsedMesa = this.helpers.parseMesa(mesa); 
+            const { mesa_id, numero, capacidad, disponible } = parsedMesa;
+            const query = `INSERT INTO mesas (numero, capacidad, disponible) VALUES (?, ?, ?)`;
+            const [result] = await this.connection.promise().query(query, [numero, capacidad, disponible]);
+
             if (result.affectedRows > 0) {
                 console.log('Mesa agregada con éxito!');
             } else {
                 console.log('No se pudo agregar la mesa.');
             }
-    
+
             return result;
         } catch (err) {
             console.log('Problemas al agregar la mesa:', err);
             throw new Error('Error agregando la mesa');
         }
     }
-    
+
     async updateMesa(mesa) {
         try {
-            const { mesa_id, numero, capacidad, disponible } = mesa;
+            const parsedMesa = this.helpers.parseMesa(mesa); 
+            const { mesa_id, numero, capacidad, disponible } = parsedMesa;
             const query = `UPDATE mesas SET numero = ?, capacidad = ?, disponible = ? WHERE mesa_id = ?`;
             const [result] = await this.connection.promise().query(query, [numero, capacidad, disponible, mesa_id]);
-    
+
             if (result.affectedRows > 0) {
                 console.log('Mesa actualizada con éxito!');
             } else {
                 console.log('No se encontró la mesa para actualizar.');
             }
-    
+
             return result;
         } catch (err) {
             console.log('Problemas al actualizar la mesa:', err);
             throw new Error('Error actualizando la mesa');
         }
     }
-    
 
     async deleteMesa(id) {
         try {
             const query = `DELETE FROM mesas WHERE mesa_id = ?`;
             const [result] = await this.connection.promise().query(query, [id]);
-            return result;
-        } catch (err) {
-            console.log('Problemas al eliminar la mesa:', err);
-            return null;
-        }
-    }
-    
-    async deleteMesa(id) {
-        try {
-            const query = `DELETE FROM mesas WHERE mesa_id = ?`;
-            const [result] = await this.connection.promise().query(query, [id]);
-    
+
             if (result.affectedRows > 0) {
                 console.log('Mesa eliminada con éxito!');
             } else {
                 console.log('No se encontró la mesa para eliminar.');
             }
-    
+
             return result;
         } catch (err) {
             console.log('Problemas al eliminar la mesa:', err);
             throw new Error('Error eliminando la mesa');
         }
     }
-    
 }
