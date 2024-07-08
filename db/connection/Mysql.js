@@ -1,22 +1,20 @@
-import mysql from 'mysql2';
+import mysql from 'mysql2/promise';
 import config from '../config/mysql.config.js';
 
 class Mysql {
     constructor() {
-        this.pool = mysql.createPool(config).promise();
-        this.tryConnection();
+        this.pool = mysql.createPool(config);
     }
 
-    tryConnection() {
-        this.pool.getConnection((err, connection) => {
-            if (err) {
-                console.error('No se pudo conectar a la Base de Datos:', err);
-                throw err;
-            } else {
-                console.log('Conectado a la Base de Datos MySQL');
-                connection.release();
-            }
-        });
+    async tryConnection() {
+        try {
+            const connection = await this.pool.getConnection();
+            console.log('Conectado a la Base de Datos MySQL');
+            connection.release();
+        } catch (err) {
+            console.error('No se pudo conectar a la Base de Datos:', err);
+            throw err;
+        }
     }
 
     static getInstance() {
@@ -28,3 +26,19 @@ class Mysql {
 }
 
 export default Mysql;
+
+async function getReservas() {
+    const db = Mysql.getInstance();
+    try {
+        const [rows] = await db.pool.query('SELECT * FROM reservas');
+        return rows;
+    } catch (err) {
+        console.error('Error al obtener reservas:', err);
+        throw err;
+    }
+}
+
+(async () => {
+    const db = Mysql.getInstance();
+    await db.tryConnection();
+})();
