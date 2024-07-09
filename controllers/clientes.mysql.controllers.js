@@ -13,7 +13,7 @@ export default class ClientesDaoMysql {
 
     async initialize() {
         try {
-            const mysqlInstance = await Mysql.getInstance();
+            const mysqlInstance = Mysql.getInstance();
             this.mysql = mysqlInstance.pool;
             await this.#createTable();
         } catch (error) {
