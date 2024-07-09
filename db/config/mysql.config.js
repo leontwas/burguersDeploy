@@ -1,9 +1,16 @@
+// const config = {
+//    host: 'sql3.freesqldatabase.com',
+//    port: 3306,
+//    user: 'sql3718809',
+//    password: '1PtpLX6Yiz',
+//    database: 'sql3718809'
+// };
+
 const config = {
-    host: 'ed9.h.filess.io',
-    port: 3307,
-    user: 'hamburgueseria_ranchpetby',
-    password: 'e40b1e8aaf094b7c2d5b2b0cdbedabdc98560959',
-    database: 'hamburgueseria_ranchpetby'
-};
+    host: process.env.HOST_DB,
+    user: proccess.env.USER_DB,
+    password: process.env.PASS_DB,
+    database:process.env.DB
+}
 
 export default config;
