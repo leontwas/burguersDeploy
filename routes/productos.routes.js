@@ -1,5 +1,5 @@
 import ProductosMysqlControllers from '../controllers/productos.mysql.controllers.js';
-import Routes from './routes.js';
+import Routes from './Routes';
 import { Router } from 'express';
 
 export default class ProductosRoutes extends Routes {

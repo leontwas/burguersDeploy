@@ -1,5 +1,5 @@
 import UsuariosControllers from '../controllers/usuarios.controllers.js';
-import Routes from './routes.js';
+import Routes from './Routes.js';
 import { Router } from 'express';
 
 export default class UsuariosRoutes extends Routes {
