@@ -1,52 +1,44 @@
-import usuariosMock from '../mocks/usuarios.mock.js'
+import usuariosMock from '../mocks/usuarios.mock.js';
 
 export default class UsuariosDaoMemory {
-
     constructor() {
-        this.users = usuariosMock
+        this.users = usuariosMock;
     }
 
     getAllUsuarios() {
-        return this.usuarios
+        return this.users;
     }
-
 
     getUsuariosById(id) {
-        const user = this.usuarios.find(user =>
-            user.id === parseInt(id))
-        return user
+        const user = this.users.find(user => user.id === parseInt(id));
+        return user;
     }
-
 
     getUsuariosByApellido(apellido) {
-        const result = this.usuarios.filter(user =>
-            user.apellido === apellido)
-        return result
+        const result = this.users.filter(user => user.apellido === apellido);
+        return result;
     }
 
-    addUsuarios(usuario) {
-        this.usuarios.push(usuario)
-        return true
+    addUsuario(usuario) {
+        this.users.push(usuario);
+        return true;
     }
 
-
-    modifyUsuarios(data) {
-        let modifiedUsuarios = null
-        this.usuarios = this.usuarios.map(user => {
+    modifyUsuario(data) {
+        let modifiedUsuario = null;
+        this.users = this.users.map(user => {
             if (user.id === data.id) {
-                user = data
-                modifiedUsuarios = user
+                user = data;
+                modifiedUsuario = user;
             }
-            return user
-        })
-        return modifiedUsuarios
+            return user;
+        });
+        return modifiedUsuario;
     }
 
-
-    deleteUsuarios(id) {
-        let oldLength = this.usuarios.length
-        this.usuarios = this.usuarios.filter(user =>
-            user.id !== parseInt(id))
-        return oldLength !== this.usuarios.length
+    deleteUsuario(id) {
+        const oldLength = this.users.length;
+        this.users = this.users.filter(user => user.id !== parseInt(id));
+        return oldLength !== this.users.length;
     }
 }
