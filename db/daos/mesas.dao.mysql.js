@@ -1,6 +1,6 @@
 import Mysql from "../connection/Mysql.js";
 
-export default class MesasDaoMysql extends Mysqlql  {
+export default class MesasDaoMysql extends Mysql  {
     constructor() {
         super();
         this.table = 'mesas';
@@ -9,7 +9,7 @@ export default class MesasDaoMysql extends Mysqlql  {
 
     async initialize() {
         try {
-            const mysqlInstance = await Mysql.getInstance(); 
+            const mysqlInstance = Mysql.getInstance(); 
             await this.createTable();
         } catch (error) {
             console.error('Error initializing MySQL connection:', error);
@@ -43,7 +43,7 @@ export default class MesasDaoMysql extends Mysqlql  {
             throw new InitializationError("Connection not initialized");
         }
 
-        const query = `SELECT * FROM ${this.table}`;
+        const query = `SELECT * FROM mesas`;
         try {
             const [results] = await this.connection.promise().query(query);
             return results;
@@ -57,7 +57,7 @@ export default class MesasDaoMysql extends Mysqlql  {
             throw new InitializationError("Connection not initialized");
         }
 
-        const query = `SELECT * FROM ${this.table} WHERE mesa_id = ?`;
+        const query = `SELECT * FROM mesas WHERE mesa_id = ?`;
         try {
             const [results] = await this.connection.promise().query(query, [mesa_id]);
             return results[0];
@@ -72,7 +72,7 @@ export default class MesasDaoMysql extends Mysqlql  {
         }
 
         const { numero, capacidad, estado } = mesa;
-        const query = `INSERT INTO ${this.table} (numero, capacidad, estado) VALUES (?, ?, ?)`;
+        const query = `INSERT INTO mesas (numero, capacidad, estado) VALUES (?, ?, ?)`;
         try {
             const [result] = await this.connection.promise().query(query, [numero, capacidad, estado]);
             return result.insertId;
@@ -87,7 +87,7 @@ export default class MesasDaoMysql extends Mysqlql  {
         }
 
         const { mesa_id, numero, capacidad, estado } = mesa;
-        const query = `UPDATE ${this.table} SET numero = ?, capacidad = ?, estado = ? WHERE mesa_id = ?`;
+        const query = `UPDATE mesas SET numero = ?, capacidad = ?, estado = ? WHERE mesa_id = ?`;
         try {
             const [result] = await this.connection.promise().query(query, [numero, capacidad, estado, mesa_id]);
             return result.affectedRows;
@@ -101,7 +101,7 @@ export default class MesasDaoMysql extends Mysqlql  {
             throw new InitializationError("Connection not initialized");
         }
 
-        const query = `DELETE FROM ${this.table} WHERE mesa_id = ?`;
+        const query = `DELETE FROM mesas WHERE mesa_id = ?`;
         try {
             const [result] = await this.connection.promise().query(query, [mesa_id]);
             return result.affectedRows;
