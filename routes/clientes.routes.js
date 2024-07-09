@@ -1,5 +1,5 @@
 import ClientesMysqlControllers from '../controllers/clientes.mysql.controllers.js';
-import Routes from './routes.js';
+import Routes from './Routes.js';
 import { Router } from 'express';
 
 
