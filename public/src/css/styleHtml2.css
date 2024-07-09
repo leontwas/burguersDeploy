@@ -1,0 +1,20 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.form-container {
+    margin-bottom: 20px;
+}
+.form-container input, .form-container button {
+    margin: 5px 0;
+    padding: 8px;
+    width: 100%;
+}
+.form-container button {
+    padding: 10px;
+    margin-top: 10px;
+}
+#registerClientForm, #createForm, #getForm, #updateForm, #deleteForm {
+    max-width: 500px;
+    margin: auto;
+}
