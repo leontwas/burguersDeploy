@@ -1,20 +1,16 @@
-import mysql from 'mysql2/promise';
+import mysql from 'mysql2';
 import config from '../config/mysql.config.js';
 
-class Mysql {
+export default class Mysql {
     constructor() {
-        this.pool = mysql.createPool(config);
-    }
+        this.connection = mysql.createConnection(config);
 
-    async getConnection() {
-        try {
-            const connection = await this.pool.getConnection();
-            return connection;
-        } catch (err) {
-            console.error('Error al obtener la conexión de la Base de Datos:', err);
-            throw err;
-        }
+        this.connection.connect(err => {
+            if (err) {
+                console.error('No se pudo conectar a la base de datos:', err);
+                return;
+            }
+            console.log('Conectado a la base de datos MySQL!');
+        });
     }
 }
-
-export default Mysql;

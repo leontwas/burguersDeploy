@@ -13,4 +13,15 @@ const config = {
     database:process.env.DB
 }
 
+//    const config = {
+//    host: 'localhost',
+//    port: 3000,
+//    user: 'root',
+//    password: 'root',
+//    database: 'hamburgueseria'
+// }
+
+
+
+
 export default config;
