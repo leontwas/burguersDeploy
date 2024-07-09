@@ -1,5 +1,5 @@
 import ReservasMysqlControllers from '../controllers/reservas.mysql.controllers.js'
-import Routes from './routes.js';
+import Routes from './Routes.js';
 import { Router } from 'express';
 
 export default class ReservasRoutes extends Routes {
