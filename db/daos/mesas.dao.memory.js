@@ -1,5 +1,36 @@
 import Mysql from '../connections/Mysql.js';
 
+// Clases personalizadas para los errores
+class DatabaseError extends Error {
+    constructor(message, cause) {
+        super(message);
+        this.name = "DatabaseError";
+        this.cause = cause;
+    }
+}
+
+class InitializationError extends DatabaseError {
+    constructor(cause) {
+        super("Error initializing MySQL connection", cause);
+        this.name = "InitializationError";
+    }
+}
+
+class TableCreationError extends DatabaseError {
+    constructor(cause) {
+        super("Error creating table", cause);
+        this.name = "TableCreationError";
+    }
+
+}
+
+class QueryError extends DatabaseError {
+    constructor(message, cause) {
+        super(message, cause);
+        this.name = "QueryError";
+    }
+}
+
 export default class MesasDaoMysql extends Mysql {
     constructor() {
         super();
@@ -13,8 +44,7 @@ export default class MesasDaoMysql extends Mysql {
             this.connection = mysqlInstance.connection;
             await this.createTable();
         } catch (error) {
-            console.error('Error initializing MySQL connection:', error);
-            throw error;
+            throw new InitializationError(error);
         }
     }
 
@@ -29,8 +59,7 @@ export default class MesasDaoMysql extends Mysql {
             await this.connection.promise().query(query);
             console.log("Tabla 'mesas' creada o ya existente.");
         } catch (error) {
-            console.error('Error creating table:', error);
-            throw error;
+            throw new TableCreationError(error);
         }
     }
 
@@ -39,9 +68,8 @@ export default class MesasDaoMysql extends Mysql {
         try {
             const [results] = await this.connection.promise().query(query);
             return results;
-        } catch (err) {
-            console.error('Problemas al obtener las mesas:', err);
-            return [];
+        } catch (error) {
+            throw new QueryError('Problemas al obtener las mesas', error);
         }
     }
 
@@ -50,9 +78,8 @@ export default class MesasDaoMysql extends Mysql {
         try {
             const [results] = await this.connection.promise().query(query, [mesa_id]);
             return results[0];
-        } catch (err) {
-            console.error('Problemas al obtener la mesa:', err);
-            return null;
+        } catch (error) {
+            throw new QueryError('Problemas al obtener la mesa', error);
         }
     }
 
@@ -62,9 +89,8 @@ export default class MesasDaoMysql extends Mysql {
         try {
             const [result] = await this.connection.promise().query(query, [numero, capacidad, estado]);
             return result.insertId;
-        } catch (err) {
-            console.error('Problemas al crear la mesa:', err);
-            return null;
+        } catch (error) {
+            throw new QueryError('Problemas al crear la mesa', error);
         }
     }
 
@@ -74,9 +100,8 @@ export default class MesasDaoMysql extends Mysql {
         try {
             const [result] = await this.connection.promise().query(query, [numero, capacidad, estado, mesa_id]);
             return result.affectedRows;
-        } catch (err) {
-            console.error('Problemas al actualizar la mesa:', err);
-            return null;
+        } catch (error) {
+            throw new QueryError('Problemas al actualizar la mesa', error);
         }
     }
 
@@ -85,9 +110,8 @@ export default class MesasDaoMysql extends Mysql {
         try {
             const [result] = await this.connection.promise().query(query, [mesa_id]);
             return result.affectedRows;
-        } catch (err) {
-            console.error('Problemas al eliminar la mesa:', err);
-            return null;
+        } catch (error) {
+            throw new QueryError('Problemas al eliminar la mesa', error);
         }
     }
 }
