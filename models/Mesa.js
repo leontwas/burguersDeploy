@@ -1,4 +1,4 @@
-export default class Reserva {
+export default class Mesa {
     constructor(mesa_id = null, numero, capacidad, disponible = true) {
       this.mesa_id = mesa_id;
       this.numero = numero;

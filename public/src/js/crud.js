@@ -1,88 +1,87 @@
-document.getElementById('registerClientForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const nombre = document.getElementById('registerNombre').value;
-    const apellido = document.getElementById('registerApellido').value;
-    const direccion = document.getElementById('registerDireccion').value;
-    const telefono = document.getElementById('registerTelefono').value;
-    const email = document.getElementById('registerEmail').value;
+$(document).ready(function() {
+    // Llenar el select de cantidad de comensales
+    for (let i = 1; i <= 20; i++) {
+        $('#cantidadComensales').append(`<option value="${i}">${i}</option>`);
+    }
 
-    const response = await fetch('/clientes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            nombre,
-            apellido,
-            direccion,
-            telefono,
-            email
-        })
+    // Función para cargar mesas automáticamente según la cantidad de comensales
+    $('#cantidadComensales').change(function() {
+        let cantidad = $(this).val();
+        // Lógica para asignar mesas según la cantidad de comensales
+        let mesaAsignada = asignarMesa(cantidad);
+        $('#mesa').val(mesaAsignada);
     });
 
-    const result = await response.json();
-    alert('Cliente registrado: ' + JSON.stringify(result));
-});
+    // Función para crear una reserva
+    $('#reservaForm').submit(function(event) {
+        event.preventDefault();
+        let formData = {
+            nombre: $('#nombre').val(),
+            apellido: $('#apellido').val(),
+            direccion: $('#direccion').val(),
+            telefono: $('#telefono').val(),
+            email: $('#email').val(),
+            cantidadComensales: $('#cantidadComensales').val(),
+            mesa: $('#mesa').val(),
+            estado: $('#estado').prop('checked') ? true : false
+        };
 
-document.getElementById('createForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const clienteId = document.getElementById('createClienteId').value;
-    const mesaId = document.getElementById('createMesaId').value;
-    const fechaReserva = document.getElementById('createFechaReserva').value;
+        // Lógica para validar los datos con validaciones.js
 
-    const response = await fetch('/reservas', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            cliente_id: clienteId,
-            mesa_id: mesaId,
-            fecha_reserva: fechaReserva,
-            estado: true
-        })
+        // Lógica para enviar los datos al servidor usando AJAX (POST)
+        $.ajax({
+            type: 'POST',
+            url: '/reservas',
+            data: JSON.stringify(formData),
+            contentType: 'application/json',
+            success: function(response) {
+                console.log('Reserva creada:', response);
+                // Lógica para actualizar la tabla de reservas
+                actualizarTablaReservas();
+            },
+            error: function(error) {
+                console.error('Error al crear reserva:', error);
+            }
+        });
     });
 
-    const result = await response.json();
-    alert('Reserva creada: ' + JSON.stringify(result));
-});
+    // Función para buscar reservas (GET)
 
-document.getElementById('getForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const reservaId = document.getElementById('getReservaId').value;
+    // Función para modificar una reserva (PUT)
 
-    const response = await fetch(`/reservas/${reservaId}`);
-    const result = await response.json();
-    document.getElementById('getResult').textContent = JSON.stringify(result);
-});
+    // Función para eliminar una reserva (DELETE)
 
-document.getElementById('updateForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const reservaId = document.getElementById('updateReservaId').value;
-    const clienteId = document.getElementById('updateClienteId').value;
-    const mesaId = document.getElementById('updateMesaId').value;
-    const fechaReserva = document.getElementById('updateFechaReserva').value;
-    const estado = document.getElementById('updateEstado').checked;
+    // Función para actualizar la tabla de reservas
+    function actualizarTablaReservas() {
+        $.get('/reservas', function(reservas) {
+            $('#tablaReservasBody').empty();
+            reservas.forEach(function(reserva) {
+                $('#tablaReservasBody').append(`
+                    <tr>
+                        <td>${reserva.reserva_id}</td>
+                        <td>${reserva.nombre}</td>
+                        <td>${reserva.apellido}</td>
+                        <td>${reserva.direccion}</td>
+                        <td>${reserva.telefono}</td>
+                        <td>${reserva.email}</td>
+                        <td>${reserva.fecha_reserva}</td>
+                        <td>${reserva.estado ? 'Activa' : 'Inactiva'}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary">Editar</button>
+                            <button class="btn btn-sm btn-danger">Eliminar</button>
+                        </td>
+                    </tr>
+                `);
+            });
+        });
+    }
 
-    const response = await fetch(`/reservas/${reservaId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            cliente_id: clienteId || undefined,
-            mesa_id: mesaId || undefined,
-            fecha_reserva: fechaReserva || undefined,
-            estado: estado
-        })
-    });
+    // Función para asignar mesa según la cantidad de comensales
+    function asignarMesa(cantidad) {
+        // Lógica para asignar mesas automáticamente
+        return `Mesa ${Math.floor(Math.random() * 10) + 1}`;
+    }
 
-    const result = await response.json();
-    alert('Reserva modificada: ' + JSON.stringify(result));
-});
-
-document.getElementById('deleteForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const reservaId = document.getElementById('deleteReservaId').value;
-
-    const response = await fetch(`/reservas/${reservaId}`, {
-        method: 'DELETE'
-    });
-
-    const result = await response.json();
-    alert('Reserva eliminada: ' + JSON.stringify(result));
+    // Cargar las reservas al cargar la página
+    actualizarTablaReservas();
 });
