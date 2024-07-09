@@ -15,108 +15,73 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>Reservas</title>  
 </head>
-<body>
-    <header>
-        <h1 class="bungee-regularspice-">Gloriosa Burgers</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="productos.html">Productos</a></li>
-                <li><a href="novedades.html">Novedades</a></li>  
-                <li><a href="nosotros.html">Nosotros</a></li>
-                <li><a href="https://www.facebook.com"><i class="fab fa-facebook-square"></i></a></li>
-                <li><a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a></li>
-            </ul>
-        </nav>
-    </header>
-    <div class="container">
-        <div class="titulo">
-            <h1 class="kalam-bold">Hacé tu reserva aquí...</h1>
+    <body>
+        <div class="container">
+            <h1 class="mt-5">Reservas</h1>
+    
+            <div class="form-container mt-4">
+                <h2>Crear Reserva (POST)</h2>
+                <form id="createForm">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="createClienteId" placeholder="ID Cliente" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="createMesaId" placeholder="ID Mesa" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="date" class="form-control" id="createFechaReserva" placeholder="Fecha Reserva" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Crear Reserva</button>
+                </form>
+            </div>
+    
+            <div class="form-container mt-4">
+                <h2>Buscar Reserva por ID (GET)</h2>
+                <form id="getForm">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="getReservaId" placeholder="ID Reserva" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar Reserva</button>
+                </form>
+                <div id="getResult" class="mt-3"></div>
+            </div>
+    
+            <div class="form-container mt-4">
+                <h2>Modificar Reserva por ID (PUT)</h2>
+                <form id="updateForm">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="updateReservaId" placeholder="ID Reserva" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="updateClienteId" placeholder="ID Cliente">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="updateMesaId" placeholder="ID Mesa">
+                    </div>
+                    <div class="mb-3">
+                        <input type="date" class="form-control" id="updateFechaReserva" placeholder="Fecha Reserva">
+                    </div>
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="updateEstado"> 
+                        <label class="form-check-label" for="updateEstado">Activa</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modificar Reserva</button>
+                </form>
+            </div>
+    
+            <div class="form-container mt-4">
+                <h2>Eliminar Reserva por ID (DELETE)</h2>
+                <form id="deleteForm">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="deleteReservaId" placeholder="ID Reserva" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Eliminar Reserva</button>
+                </form>
+            </div>
         </div>
-        <div class="form-container mt-4">
-            <h2>Registrar Cliente (POST)</h2>
-            <form id="registerClientForm">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="registerNombre" placeholder="Nombre" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="registerApellido" placeholder="Apellido" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="registerDireccion" placeholder="Dirección" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="registerTelefono" placeholder="Teléfono" required>
-                </div>
-                <div class="mb-3">
-                    <input type="email" class="form-control" id="registerEmail" placeholder="Email" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Registrar Cliente</button>
-            </form>
-        </div>
-
-        <div class="form-container mt-4">
-            <h2>Crear Reserva (POST)</h2>
-            <form id="createForm">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="createClienteId" placeholder="ID Cliente" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="createMesaId" placeholder="ID Mesa" required>
-                </div>
-                <div class="mb-3">
-                    <input type="date" class="form-control" id="createFechaReserva" placeholder="Fecha Reserva" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Crear Reserva</button>
-            </form>
-        </div>
-
-        <div class="form-container mt-4">
-            <h2>Buscar Reserva (GET)</h2>
-            <form id="getForm">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="getReservaId" placeholder="ID Reserva" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Buscar Reserva</button>
-            </form>
-            <div id="getResult" class="mt-3"></div>
-        </div>
-
-        <div class="form-container mt-4">
-            <h2>Modificar Reserva (PUT)</h2>
-            <form id="updateForm">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="updateReservaId" placeholder="ID Reserva" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="updateClienteId" placeholder="ID Cliente">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="updateMesaId" placeholder="ID Mesa">
-                </div>
-                <div class="mb-3">
-                    <input type="date" class="form-control" id="updateFechaReserva" placeholder="Fecha Reserva">
-                </div>
-                <div class="form-check mb-3">
-                    <input type="checkbox" class="form-check-input" id="updateEstado"> 
-                    <label class="form-check-label" for="updateEstado">Activa</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Modificar Reserva</button>
-            </form>
-        </div>
-
-        <div class="form-container mt-4">
-            <h2>Eliminar Reserva (DELETE)</h2>
-            <form id="deleteForm">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="deleteReservaId" placeholder="ID Reserva" required>
-                </div>
-                <button type="submit" class="btn btn-danger">Eliminar Reserva</button>
-            </form>
-        </div>
-    </div>
+    
+        <script src="script.js"></script>
     <footer>
         <div class="grid-container">
             <div class="grid-item kalam-regular">Preguntas frecuentes</div>
@@ -132,6 +97,7 @@
         <div class="copyright kalam-regular">&copy; 2024 Gloriosa Burgers. Todos los derechos reservados.</div>
     </footer>
     <script src="./src/js/crud.js"></script>
+    <script src="./assets/js/validaciones.js"></script>
 
 </body>
 </html>
