@@ -1,36 +1,6 @@
-import Mysql from '../connections/Mysql.js';
+import Mysql from "../connection/Mysql.js";
 
-// Clases personalizadas para los errores
-class DatabaseError extends Error {
-    constructor(message, cause) {
-        super(message);
-        this.name = "DatabaseError";
-        this.cause = cause;
-    }
-}
-
-class InitializationError extends DatabaseError {
-    constructor(cause) {
-        super("Error initializing MySQL connection", cause);
-        this.name = "InitializationError";
-    }
-}
-
-class TableCreationError extends DatabaseError {
-    constructor(cause) {
-        super("Error creating table", cause);
-        this.name = "TableCreationError";
-    }
-}
-
-class QueryError extends DatabaseError {
-    constructor(message, cause) {
-        super(message, cause);
-        this.name = "QueryError";
-    }
-}
-
-export default class MesasDaoMysql extends Mysql {
+export default class MesasDaoMysql extends Mysqlql  {
     constructor() {
         super();
         this.table = 'mesas';
@@ -39,17 +9,17 @@ export default class MesasDaoMysql extends Mysql {
 
     async initialize() {
         try {
-            const mysqlInstance = await Mysql.getInstance();
-            this.connection = mysqlInstance.connection;
+            const mysqlInstance = await Mysql.getInstance(); 
             await this.createTable();
         } catch (error) {
-            throw new InitializationError(error);
+            console.error('Error initializing MySQL connection:', error);
+            throw error;
         }
     }
 
     async createTable() {
-        if (!this.connection) {
-            throw new InitializationError("Connection not initialized");
+        if (!this.connection || !this.connection.promise) {
+            throw new Error('MySQL connection or promise method undefined');
         }
 
         const query = `CREATE TABLE IF NOT EXISTS mesas (
@@ -58,11 +28,13 @@ export default class MesasDaoMysql extends Mysql {
             capacidad INT NOT NULL,
             estado VARCHAR(50) NOT NULL
         )`;
+        
         try {
             await this.connection.promise().query(query);
             console.log("Tabla 'mesas' creada o ya existente.");
         } catch (error) {
-            throw new TableCreationError(error);
+            console.error('Error creating table:', error);
+            throw error;
         }
     }
 
