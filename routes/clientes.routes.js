@@ -1,4 +1,4 @@
-import ClientesMysqlControllers from '../controllers/clientes.mysql.controllers.js';
+import ClientesControllers from '../controllers/clientes.controllers.js';
 import Routes from './Routes.js';
 import { Router } from 'express';
 
@@ -7,7 +7,7 @@ export default class ClientesRoutes extends Routes {
     constructor() {
         super();
         this.router = Router();
-        this.controller = new ClientesMysqlControllers();
+        this.controller = new ClientesControllers();
         this.getRoutes();
     }
 
@@ -17,7 +17,7 @@ export default class ClientesRoutes extends Routes {
             .get('/id', this.controller.getClienteById)
             .get('/apellido', this.controller.getClientesByApellido)
             .get('/email', this.controller.getClientesByEmail)
-            .post('/', this.controller.addCliente)
+            .post('/', this.controller.createCliente)
             .put('/id', this.controller.updateCliente)
             .delete('/id', this.controller.deleteCliente)      
     }

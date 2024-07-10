@@ -1,48 +1,51 @@
-import clientesMock from '../db/mocks/clientes.mock.js'
+import ClientesDaoMysql from '../db/daos/clientes.dao.mysql.js'
 import ClientesHelpers from '../helpers/clientes.helpers.js'
 
 export default class ClientesControllers {
 
     constructor() {
-        this.clientes = clientesMock
+        this.db = ClientesDaoMysql
         this.helpers = new ClientesHelpers()
     }
 
-    getAllClientes = (req, res) => {
-        res.json(this.clientes)
+    getAllClientes =  async (req, res) => {
+        const clientes = await this.db.getAllClientes()
+        res.json(clientes)
     }
 
-    getClienteById = (req, res) => {
-        const { id } = req.params
-        const cliente = this.clientes.find(cliente => cliente.cliente_id === parseInt(id))
-        if (cliente) {
-            res.json(cliente)
-        } else {
-            res.status(404).send('Cliente no encontrado')
-        }
+    getClienteById = async (req, res) => {
+        const { cliente_id } = req.params
+        const cliente = await this.db.getClienteById(cliente_id)
+        res.json(cliente)
     }
 
-    createCliente = (req, res) => {
+    getClientesByEmail = async (req, res) => {
+        const { email } = req.params
+        const cliente = await this.db.getClientessByEmail(email)
+        res.json(cliente)
+    }
+
+    getClientesByApellido = async (req, res) => {
+        const { apellido } = req.params
+        const cliente = await this.db.getClientesByApellido(apellido)
+        res.json(cliente)
+    }
+
+    createCliente = async (req, res) => {
         const cliente = this.helpers.parseCliente(req.body)
-        this.clientes.push(cliente)
-        res.send('Cliente creado exitosamente');
+        const result = await this.db.createCliente(cliente)
+        res.json(result)
     }
 
-    updateCliente = (req, res) => {
-        const { id } = req.params
-        const clienteIndex = this.clientes.findIndex(cliente => cliente.cliente_id === parseInt(id))
-        if (clienteIndex !== -1) {
-            const updatedCliente = this.helpers.parseCliente(req.body)
-            this.clientes[clienteIndex] = { ...this.clientes[clienteIndex], ...updatedCliente }
-            res.send('Cliente actualizado exitosamente')
-        } else {
-            res.status(404).send('Cliente no encontrado')
-        }
-    }
+    updateCliente = async (req, res) => {
+        const cliente = this.helpers.parseCliente(req.body)
+        const result = await this.db.updateCliente(cliente)
+        res.json(result);
+    } 
 
-    deleteCliente = (req, res) => {
-        const { id } = req.params
-        this.clientes = this.clientes.filter(cliente => cliente.cliente_id !== parseInt(id))
-        res.send('Cliente eliminado exitosamente');
+    deleteCliente = async (req, res) => {
+        const { cliente_id } = this.helpers.parseCliente(req.body)
+        const result = await this.db.deleteCliente(cliente_id)
+        res.json(result)
     }
 }

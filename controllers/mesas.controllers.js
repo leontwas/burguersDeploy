@@ -1,5 +1,6 @@
+import MesasDaoMysql from '../db/daos/mesas.dao.mysql.js'
 import MesasHelpers from '../helpers/mesas.helpers.js'
-import MesasDaoMysql from './mesas.mysql.controllers.js'
+
 
 export default class MesasControllers {
 
@@ -14,32 +15,26 @@ export default class MesasControllers {
     }
 
     getMesaById = async (req, res) => {
-        const { id } = req.params
-        const mesa = await this.db.getMesaById(id)
-            res.json(mesa)
+        const { mesa_id } = req.params
+        const mesa = await this.db.getMesaById(mesa_id)
+        res.json(mesa)
     }
 
     createMesa = async (req, res) => {
-        const mesa = await this.helpers.parseMesa(req.body)
-        this.mesas.push(mesa)
-        res.send('Mesa creada exitosamente');
+        const mesa = this.helpers.parseMesa(req.body)
+        const result = await this.db.createMesa(mesa)
+        res.json(result);
     }
 
-    updateMesa = (req, res) => {
-        const { id } = req.params
-        const mesaIndex = this.mesas.findIndex(mesa => mesa.id === parseInt(id))
-        if (mesaIndex !== -1) {
-            const updatedMesa = this.helpers.parseMesa(req.body)
-            this.mesas[mesaIndex] = { ...this.mesas[mesaIndex], ...updatedMesa }
-            res.send('Mesa actualizada exitosamente')
-        } else {
-            res.status(404).send('Mesa no encontrada')
-        }
-    }
+    updateMesas = async (req, res) => {
+        const mesa = this.helpers.parseMesa(req.body)
+        const result = await this.db.updateMesas(mesa)
+        res.json(result);
+    } 
 
-    deleteMesa = (req, res) => {
-        const { id } = req.params
-        this.mesas = this.mesas.filter(mesa => mesa.id !== parseInt(id))
-        res.send('Mesa eliminada exitosamente');
+    deleteMesa = async (req, res) => {
+        const { mesa_id } = req.params
+        const result = await this.db.deleteMesa(mesa_id)
+        res.json(result)
     }
 }

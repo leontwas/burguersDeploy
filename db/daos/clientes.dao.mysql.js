@@ -1,5 +1,5 @@
 import { query } from 'express'
-import Mysql from '../connection/Mysql';
+import Mysql from '../connection/Mysql.js';
 
 export default class ClientesDaoMysql extends Mysql {
     
@@ -19,7 +19,7 @@ export default class ClientesDaoMysql extends Mysql {
         telefono VARCHAR(20) NOT NULL,
         email VARCHAR(100) NOT NULL
     )`;
-          this.mysql.query(query);
+          this.connection.query(query);
     }
 
     async getAllClientes() {

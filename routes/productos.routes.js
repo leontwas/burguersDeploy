@@ -1,4 +1,4 @@
-import ProductosMysqlControllers from '../controllers/productos.mysql.controllers.js';
+import ProductosControllers from '../controllers/productos.controllers.js';
 import Routes from './Routes.js';
 import { Router } from 'express';
 
@@ -6,7 +6,7 @@ export default class ProductosRoutes extends Routes {
     constructor() {
         super();
         this.router = Router();
-        this.controller = new ProductosMysqlControllers();
+        this.controller = new ProductosControllers();
         this.getRoutes();
     }
 
@@ -15,7 +15,8 @@ export default class ProductosRoutes extends Routes {
         .get('/', this.controller.getAllProductos)
         .get('/nombre', this.controller.getProductosByNombre)
         .get('/id', this.controller.getProductoById)
-        .post('/', this.controller.addProducto)
+        .get('/descripcion', this.controller.getProductosByDescripcion)
+        .post('/', this.controller.createProducto)
         .put('/id', this.controller.updateProducto)
         .delete('/id', this.controller.deleteProducto)     
     }

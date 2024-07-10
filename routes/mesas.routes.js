@@ -1,4 +1,4 @@
-import MesasMysqlControllers from '../controllers/mesas.mysql.controllers.js';
+import MesasControllers from '../controllers/mesas.controllers.js';
 import Routes from './Routes.js';
 import { Router } from 'express';
 
@@ -6,7 +6,7 @@ export default class MesasRoutes extends Routes {
     constructor() {
         super();
         this.router = Router();
-        this.controller = new MesasMysqlControllers();
+        this.controller = new MesasControllers();
         this.getRoutes();
     }
 
