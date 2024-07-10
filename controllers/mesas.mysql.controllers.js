@@ -6,8 +6,8 @@ export default class MesasDaoMysql extends Mysql {
     constructor() {
         super();
         this.table = 'mesas';
-        this.#createTable();
         this.helpers = new MesasHelpers(); 
+        this.#createTable();
     }
 
     #createTable() {
@@ -20,46 +20,31 @@ export default class MesasDaoMysql extends Mysql {
     this.connection.query(query)
     }
            
-async getAllMesas() {
-        try {
-            const query = `SELECT * FROM mesas`;
-            const [result] = await this.connection.promise().query(query);
-            return result;
-        } catch (err) {
-            console.log('Problemas al obtener las mesas:', err);
-            return [];
-        }
+ async getAllMesas() {
+            const query = `SELECT * FROM ${this.table}`;
+            const [result] = this.connection.promise().query(query);
+            return result
     }
 
     async getMesaById(id) {
-        try {
-            const query = `SELECT * FROM mesas WHERE mesa_id = ?`;
-            const [result] = await this.connection.promise().query(query, [id]);
-            return result[0];
-        } catch (err) {
-            console.log('Problemas al obtener la mesa:', err);
-            return null;
+            const query = `SELECT * FROM ${this.table} WHERE ${id}`;
+            const [result] = this.connection.promise().query(query);
+            return result;
         }
-    }
+    
 
-    async addMesa(mesa) {
-        try {
-            const parsedMesa = this.helpers.parseMesa(mesa); 
-            const { mesa_id, numero, capacidad, disponible } = parsedMesa;
+    async createMesa(mesa) {
+            const parseadaMesa = this.helpers.parseMesa(mesa); 
+            const { numero, capacidad, disponible } = parseadaMesa;
             const query = `INSERT INTO mesas (numero, capacidad, disponible) VALUES (?, ?, ?)`;
-            const [result] = await this.connection.promise().query(query, [numero, capacidad, disponible]);
-
+            const [result] = this.connection.query(query, [numero, capacidad, disponible]);
             if (result.affectedRows > 0) {
                 console.log('Mesa agregada con éxito!');
             } else {
                 console.log('No se pudo agregar la mesa.');
             }
-
             return result;
-        } catch (err) {
-            console.log('Problemas al agregar la mesa:', err);
-            throw new Error('Error agregando la mesa');
-        }
+    
     }
 
     async updateMesa(mesa) {

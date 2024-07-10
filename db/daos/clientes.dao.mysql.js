@@ -1,154 +1,56 @@
-import Mysql from '../connection/Mysql.js'; // Asegúrate de que la ruta sea correcta
-import ClientesHelpers from '../helpers/clientes.helpers.js';
+import { query } from 'express'
+import Mysql from '../connection/Mysql';
 
-export default class ClientesDaoMysql {
+export default class ClientesDaoMysql extends Mysql {
+    
     constructor() {
-        this.mysql = null;
+        super();
+        this.query = query
         this.table = 'clientes';
-        this.helpers = new ClientesHelpers();
-        this.initialize(); 
+        this.#createTable()
     }
 
-    async initialize() {
-        try {
-            const mysqlInstance = await Mysql.getInstance();
-            this.mysql = mysqlInstance.pool;
-            await this.#createTable();
-        } catch (error) {
-            console.error('Error initializing MySQL connection:', error);
-            throw error;
-        }
-    }
-
-    async #createTable() {
-        try {
-            const query = `CREATE TABLE IF NOT EXISTS clientes (
-                cliente_id INT PRIMARY KEY AUTO_INCREMENT,
-                nombre VARCHAR(100) NOT NULL,
-                apellido VARCHAR(100) NOT NULL,
-                direccion VARCHAR(100) NOT NULL,
-                telefono VARCHAR(20) NOT NULL,
-                email VARCHAR(100) NOT NULL
-            )`;
-            await this.mysql.query(query);
-            console.log("Tabla creada o ya existente.");
-        } catch (error) {
-            console.error('Error creating table:', error);
-            throw error;
-        }
+   #createTable() {
+        const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
+        cliente_id INT PRIMARY KEY AUTO_INCREMENT,
+        nombre VARCHAR(100) NOT NULL,
+        apellido VARCHAR(100) NOT NULL,
+        direccion VARCHAR(100) NOT NULL,
+        telefono VARCHAR(20) NOT NULL,
+        email VARCHAR(100) NOT NULL
+    )`;
+          this.mysql.query(query);
     }
 
     async getAllClientes() {
-        try {
-            const query = `SELECT * FROM clientes`;
-            const [result] = await this.mysql.promise().query(query);
+            const query = `SELECT * FROM ${this.table}`;
+            const [result] = await this.connection.promise().query(query);
             return result;
-        } catch (err) {
-            console.log('Problemas al obtener los clientes:', err);
-            return [];
-        }
     }
 
-    async getClienteById(id) {
-        try {
-            const query = `SELECT * FROM clientes WHERE cliente_id = ?`;
-            const [result] = await this.mysql.promise().query(query, [id]);
-            return result[0];
-        } catch (err) {
-            console.log('Problemas al obtener el cliente:', err);
-            return null;
-        }
+    async getClienteById(cliente_id) {
+            const query = `SELECT * FROM ${this.table} WHERE cliente_id = ?`;
+            const [result] = await this.mysql.promise().query(query, [cliente_id]);
+            return result
     }
 
-    async addCliente(cliente) {
-        try {
-            const { cliente_id, nombre, apellido, direccion, telefono, email } = this.helpers.parseCliente(cliente);
-            const query = `INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email) VALUES (?, ?, ?, ?, ?, ?)`;
-            const [result] = await this.mysql.promise().query(query, [cliente_id, nombre, apellido, direccion, telefono, email]);
-            
-            if (result.insertId) {
-                console.log('Cliente agregado con éxito!');
-            } else {
-                console.log('No se pudo agregar el cliente.');
-            }
-
-            return result.insertId;
-        } catch (err) {
-            console.log('Problemas al agregar el cliente:', err);
-            return null;
-        }
-    }
+    async createCliente(cliente) {
+            const { cliente_id, nombre, apellido, direccion, telefono, email } = cliente;
+            const query = `INSERT INTO ${this.table} (cliente_id, nombre, apellido, direccion, telefono, email) VALUES (?, ?, ?, ?, ?, ?)`;
+            const [result] = await this.connection.promise().query(query, [cliente_id, nombre, apellido, direccion, telefono, email]);
+            return result.affectedRows 
+          }
 
     async updateCliente(cliente) {
-        try {
-            const { cliente_id, nombre, apellido, direccion, telefono, email } = this.helpers.parseCliente(cliente);
-            const query = `UPDATE clientes SET nombre = ?, apellido = ?, direccion = ?, telefono = ?, email = ? WHERE cliente_id = ?`;
-            const [result] = await this.mysql.promise().query(query, [nombre, apellido, direccion, telefono, email, cliente_id]);
-
-            if (result.affectedRows > 0) {
-                console.log('Cliente actualizado con éxito!'); 
-            } else {
-                console.log('No se encontró el cliente para actualizar.');
-            }
-
+            const { cliente_id, nombre, apellido, direccion, telefono, email } = cliente;
+            const query = `UPDATE  ${this.table} SET nombre = ?, apellido = ?, direccion = ?, telefono = ?, email = ? WHERE cliente_id = ?`;
+            const [result] = await this.connection.promise().query(query, [nombre, apellido, direccion, telefono, email, cliente_id]);
             return result.affectedRows;
-        } catch (err) {
-            console.log('Problemas al actualizar al cliente:', err);
-            return null;
-        }
     }
 
     async deleteCliente(cliente_id) {
-        try {
-            const query = `DELETE FROM clientes WHERE cliente_id = ?`;
-            const [result] = await this.mysql.promise().query(query, [cliente_id]);
-
-            if (result.affectedRows > 0) {
-                console.log('Cliente eliminado con éxito!');
-            } else {
-                console.log('No se encontró el cliente para eliminar.');
-            }
-
+            const query = `DELETE FROM ${this.table} WHERE cliente_id = ?`;
+            const [result] = await this.connection.promise().query(query, [cliente_id]);
             return result.affectedRows;
-        } catch (err) {
-            console.log('Problemas al eliminar al cliente:', err);
-            return null;
-        }
-    }
-
-    async getClientesByApellido(apellido) {
-        try {
-            const query = `SELECT * FROM clientes WHERE apellido LIKE ?`;
-            const [result] = await this.mysql.promise().query(query, [`%${apellido}%`]);
-
-            if (result.length > 0) {
-                console.log('Clientes encontrados:', result);
-            } else {
-                console.log('No se encontraron clientes con ese apellido.');
-            }
-
-            return result;
-        } catch (err) {
-            console.log('Problemas al obtener los clientes por apellido:', err);
-            return [];
-        }
-    }
-
-    async getClientesByEmail(email) {
-        try {
-            const query = `SELECT * FROM clientes WHERE email = ?`;
-            const [result] = await this.mysql.promise().query(query, [email]);
-
-            if (result.length > 0) {
-                console.log('Clientes encontrados:', result);
-            } else {
-                console.log('No se encontraron clientes con ese email.');
-            }
-
-            return result;
-        } catch (err) {
-            console.log('Problemas al obtener los clientes por email:', err);
-            return [];
-        }
     }
 }

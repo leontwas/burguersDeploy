@@ -1,29 +1,26 @@
-import mesasMock from '../db/mocks/mesas.mock.js'
 import MesasHelpers from '../helpers/mesas.helpers.js'
+import MesasDaoMysql from './mesas.mysql.controllers.js'
 
 export default class MesasControllers {
 
     constructor() {
-        this.mesas = mesasMock
-        this.helpers = new MesasHelpers()
+    this.db = new MesasDaoMysql()
+    this.helpers = new MesasHelpers()
     }
 
-    getAllMesas = (req, res) => {
-        res.json(this.mesas)
+    getAllMesas = async (req, res) => {
+        const mesas = await this.db.getAllMesas()
+        res.json(mesas)
     }
 
-    getMesaById = (req, res) => {
+    getMesaById = async (req, res) => {
         const { id } = req.params
-        const mesa = this.mesas.find(mesa => mesa.id === parseInt(id))
-        if (mesa) {
+        const mesa = await this.db.getMesaById(id)
             res.json(mesa)
-        } else {
-            res.status(404).send('Mesa no encontrada')
-        }
     }
 
-    createMesa = (req, res) => {
-        const mesa = this.helpers.parseMesa(req.body)
+    createMesa = async (req, res) => {
+        const mesa = await this.helpers.parseMesa(req.body)
         this.mesas.push(mesa)
         res.send('Mesa creada exitosamente');
     }

@@ -1,112 +1,54 @@
-import Mysql from "../connection/Mysql.js";
+import { query } from 'express'
+import Mysql from '../connection/Mysql.js'
 
 export default class MesasDaoMysql extends Mysql  {
     constructor() {
         super();
+        this.query = query
         this.table = 'mesas';
-        this.initialize();
+        this.#createTable()
     }
 
-    async initialize() {
-        try {
-            const mysqlInstance = Mysql.getInstance(); 
-            await this.createTable();
-        } catch (error) {
-            console.error('Error initializing MySQL connection:', error);
-            throw error;
-        }
-    }
-
-    async createTable() {
-        if (!this.connection || !this.connection.promise) {
-            throw new Error('MySQL connection or promise method undefined');
-        }
-
-        const query = `CREATE TABLE IF NOT EXISTS mesas (
+   #createTable() {
+         const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
             mesa_id INT PRIMARY KEY AUTO_INCREMENT,
             numero INT NOT NULL,
             capacidad INT NOT NULL,
-            estado VARCHAR(50) NOT NULL
+            estado TINYINT(1) DEFAULT 1
         )`;
-        
-        try {
-            await this.connection.promise().query(query);
-            console.log("Tabla 'mesas' creada o ya existente.");
-        } catch (error) {
-            console.error('Error creating table:', error);
-            throw error;
-        }
-    }
+        this.connection.query(query)
+            }
 
     async getAllMesas() {
-        if (!this.connection) {
-            throw new InitializationError("Connection not initialized");
-        }
-
-        const query = `SELECT * FROM mesas`;
-        try {
-            const [results] = await this.connection.promise().query(query);
-            return results;
-        } catch (error) {
-            throw new QueryError('Problemas al obtener las mesas', error);
-        }
+        const query = `SELECT * FROM ${this.table}`
+        const [results] = await this.connection.promise().query(query);
+        return results      
     }
 
     async getMesaById(mesa_id) {
-        if (!this.connection) {
-            throw new InitializationError("Connection not initialized");
-        }
-
-        const query = `SELECT * FROM mesas WHERE mesa_id = ?`;
-        try {
-            const [results] = await this.connection.promise().query(query, [mesa_id]);
-            return results[0];
-        } catch (error) {
-            throw new QueryError('Problemas al obtener la mesa', error);
-        }
+        const query = `SELECT * FROM ${this.table} WHERE ${mesa_id}`;
+        const [results] = await this.connection.promise().query(query);
+        return results
     }
 
     async createMesa(mesa) {
-        if (!this.connection) {
-            throw new InitializationError("Connection not initialized");
-        }
-
-        const { numero, capacidad, estado } = mesa;
-        const query = `INSERT INTO mesas (numero, capacidad, estado) VALUES (?, ?, ?)`;
-        try {
-            const [result] = await this.connection.promise().query(query, [numero, capacidad, estado]);
-            return result.insertId;
-        } catch (error) {
-            throw new QueryError('Problemas al crear la mesa', error);
-        }
+        const { mesa_id, numero, capacidad, estado } = mesa;
+        const query = `INSERT INTO ${this.table} (mesa_id, numero, capacidad, estado) VALUES (?, ?, ?, ?)`;
+        const [result] = this.connection.promise().query(query, [mesa_id, numero, capacidad, estado])
+        return result.affectedRows 
     }
 
     async updateMesa(mesa) {
-        if (!this.connection) {
-            throw new InitializationError("Connection not initialized");
-        }
-
         const { mesa_id, numero, capacidad, estado } = mesa;
-        const query = `UPDATE mesas SET numero = ?, capacidad = ?, estado = ? WHERE mesa_id = ?`;
-        try {
-            const [result] = await this.connection.promise().query(query, [numero, capacidad, estado, mesa_id]);
-            return result.affectedRows;
-        } catch (error) {
-            throw new QueryError('Problemas al actualizar la mesa', error);
-        }
+        const query = `UPDATE  ${this.table} SET numero = ?, capacidad = ?, estado = ? WHERE mesa_id = ?`;
+        const [result] = await this.connection.promise().query(query, [numero, capacidad, estado, mesa_id]);
+        return result.affectedRows;
+       
     }
 
     async deleteMesa(mesa_id) {
-        if (!this.connection) {
-            throw new InitializationError("Connection not initialized");
-        }
-
-        const query = `DELETE FROM mesas WHERE mesa_id = ?`;
-        try {
+        const query = `DELETE FROM ${this.table} WHERE mesa_id = ?`;
             const [result] = await this.connection.promise().query(query, [mesa_id]);
             return result.affectedRows;
-        } catch (error) {
-            throw new QueryError('Problemas al eliminar la mesa', error);
-        }
     }
 }

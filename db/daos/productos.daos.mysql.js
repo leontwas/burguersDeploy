@@ -1,86 +1,63 @@
-import Mysql from '../mysql.js'
+import { query } from 'express'
+import Mysql from '../connection/Mysql.js'
 
-class ProductosDaoMysql {
+export default class ProductosDaoMysql extends Mysql {
     constructor() {
-        this.initialize()
-    }
-
-    async initialize() {
-        const mysqlInstance = await Mysql.getInstance()
-        this.mysql = mysqlInstance.connection
+        super();
+        this.query = query
         this.table = 'productos'
-        await this.#createTable()
+        this.#createTable()
     }
 
-    async #createTable() {
-        try {
-        const query = `CREATE TABLE IF NOT EXISTS productos (
+ #createTable() {
+        const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
         producto_id INT PRIMARY KEY AUTO_INCREMENT,
         nombre VARCHAR(100) NOT NULL,
         descripcion TEXT,
         precio DECIMAL(10, 2) NOT NULL,
         stock INT NOT NULL
     )`
-            await this.mysql.query(query)
-            console.log("Tabla creada o ya existente.")
-        } catch (error) {
-            console.error('Error creating table:', error)
-            throw error
-        }
+    this.connection.query(query)  
     }
 
     async getAllProductos() {
-        try {
-            const [results] = await this.mysql.query(`SELECT * FROM productos`)
-            return results
-        } catch (err) {
-            throw err
-        }
+        const query = `SELECT * FROM ${this.table}`
+        const [results] = await this.connection.promise().query(query);
+        return results      
     }
+
 
     async getProductoById(producto_id) {
-        try {
-            const [results] = await this.mysql.query(`SELECT * FROM ${this.table} WHERE producto_id = ?`, [producto_id])
-            return results[0]
-        } catch (err) {
-            throw err
-        }
+        const query = `SELECT * FROM ${this.table} WHERE ${producto_id}`;
+        const [results] = await this.connection.promise().query(query);
+        return results
     }
 
-    async createProducto(nombre, descripcion, precio, stock) {
-        try {
-            const producto = { nombre, descripcion, precio, stock };
-            const [result] = await this.mysql.query(`INSERT INTO ${this.table} SET ?`, producto);
-            return result.insertId;
-        } catch (err) {
-            throw err;
-        }
+    async getProductosByNombre(nombre) {
+        const query = `SELECT * FROM ${this.table} WHERE '${nombre}'`;
+        const [result] = await this.connection.promise().query(query)
+        return result
     }
-    
 
-    async updateProducto(producto_id, nombre, descripcion, precio, stock) {
-        try {
-            const query = `
-                UPDATE ${this.table} 
-                SET nombre = ?, descripcion = ?, precio = ?, stock = ?
-                WHERE producto_id = ?
-            `;
-            const [result] = await this.mysql.query(query, [ nombre, descripcion, precio, stock, producto_id]);
-            return result.affectedRows;
-        } catch (err) {
-            throw err;
-        }
+
+    async createProducto(producto) {
+            const { producto_id, nombre, descripcion, precio, stock } =  producto
+            const query = `INSERT INTO ${this.table} VALUES (?,?,?,?,?)`
+            const [result] = this.connection.promise().query(query, [producto_id, nombre, descripcion, precio, stock])
+            return result.affectedRows 
     }
     
 
-    async deleteProducto(producto_id) {
-        try {
-            const [result] = await this.mysql.query(`DELETE FROM ${this.table} WHERE producto_id = ?`, [producto_id])
-            return result.affectedRows
-        } catch (err) {
-            throw err
-        }
+    async updateProducto(producto) {
+        const { producto_id, nombre, descripcion, precio, stock  } = producto;
+        const query = `UPDATE ${this.table} SET nombre = ?, descripción = ?, precio, stock = ? WHERE producto_id = ?`;
+        const [result] = await this.connection.promise().query(query, [nombre, descripcion, precio, stock, producto_id]);
+        return result.affectedRows
+    }
+
+    async deleteUsuario(producto_id) {
+        const query = `DELETE FROM ${this.table} WHERE producto_id = ?`;
+        const [result] = await this.connection.promise().query(query, [producto_id]);
+        return result.affectedRows;      
     }
 }
-
-export default ProductosDaoMysql

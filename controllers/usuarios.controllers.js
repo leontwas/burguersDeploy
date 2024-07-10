@@ -1,50 +1,46 @@
-import usuariosMock from '../db/mocks/usuarios.mock.js'
+import UsuariosDaoMysql from '../db/daos/usuarios.dao.mysql.js'
 import UsuariosHelpers from '../helpers/usuarios.helpers.js'
 
 export default class UsuariosControllers {
 
     constructor() {
-        this.usuarios = usuariosMock
+        this.db = UsuariosDaoMysql
         this.helpers = new UsuariosHelpers()
     }
 
-    getAllUsuarios = (req, res) => {
-        res.json(this.usuarios)
+    getAllUsuarios =  async (req, res) => {
+        const usuarios = await this.db.getAllUsuarios()
+        res.json(usuarios)
     }
 
-    getUsuarioById = (req, res) => {
-        const { id } = req.params
-        const usuario = this.usuarios.find(usuario => usuario.id === parseInt(id))
-        if (usuario) {
-            res.json(usuario)
-        } else {
-            res.status(404).send('Usuario no encontrado')
-        }
+    getUsuarioById = async (req, res) => {
+        const { usuario_id } = req.params
+        const usuario = await this.db.getUsuarioById()
+        res.json(usuario)
     }
 
-    createUsuarios = (req, res) => {
-        console.log(req.body.id, req.body.nombre, req.body.apellido, req.body.telefono, req.body.email)
+getUsuariosByEmail = async (req, res) => {
+    const { email } = req.params
+    const usuario = await this.db.getUsuariosByEmail()
+    res.json(usuario)
+}
+
+createUsuarios = async (req, res) => {
         const usuario = this.helpers.parseUsuarios(req.body)
-        this.usuarios.push(usuario)
-        res.send('Usuario creado exitosamente');
+        const result = await this.db.createUsuarios(usuario)
+        res.json(result);
     } 
 
-    updateUsuarios = (req, res) => {
-        const { id } = req.params
-        const usuarioIndex = this.usuarios.findIndex(usuario => usuario.id === parseInt(id))
-        if (usuarioIndex !== -1) {
-            const updatedUsuario = this.helpers.parseUsuarios(req.body)
-            this.usuarios[usuarioIndex] = { ...this.usuarios[usuarioIndex], ...updatedUsuario }
-            res.send('Usuario actualizado exitosamente')
-        } else {
-            res.status(404).send('Usuario no encontrado')
-        }
-    }
+    updateUsuarios = async (req, res) => {
+        const usuario = this.helpers.parseUsuarios(req.body)
+        const result = await this.db.updateUsuarios(usuario)
+        res.json(result);
+    } 
 
-    deleteUsuarios = (req, res) => {
-        const { id } = req.params
-        this.usuarios = this.usuarios.filter(usuario => usuario.id !== parseInt(id))
-        res.send('Usuario eliminado exitosamente');
+    deleteUsuarios = async (req, res) => {
+        const { usuario_id } = this.helpers.parseUsuarios(req.body)
+        const result = await this.db.deleteUsuarios(usuario_id)
+        res.json(result)
     }
 
 }
