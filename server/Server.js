@@ -12,6 +12,13 @@ export default class Server {
         Server.app.use(express.urlencoded({ extended: true }))
     }
 
+                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    static runServer(port) {
+        Server.app.listen(port, () =>
+            console.log(`Escuchando en http://localhost:${port}`)
+        );
+    }
+
     static routes() {
         const reservas = new ReservasRoutes();
         const productos = new ProductosRoutes();
@@ -21,12 +28,6 @@ export default class Server {
         Server.app.use('/productos', productos.router);
         Server.app.use('/clientes', clientes.router);
         Server.app.use('/mesas', mesas.router);
-    }
-
-    static runServer(port) {
-        Server.app.listen(port, () =>
-            console.log(`Escuchando en http://localhost:${port}`)
-        );
     }
 
     static run(port) {
