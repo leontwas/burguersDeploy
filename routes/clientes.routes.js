@@ -1,5 +1,5 @@
 import ClientesControllers from '../controllers/clientes.controllers.js';
-import Routes from './routes.js';
+import Routes from './Routes.js';
 import { Router } from 'express';
 
 
@@ -15,9 +15,10 @@ export default class ClientesRoutes extends Routes {
         this.router
             .get('/', this.controller.getAllClientes)
             .get('/id', this.controller.getClienteById)
+            .get('/apellido', this.controller.getClientesByApellido)
+            .get('/email', this.controller.getClientesByEmail)
             .post('/', this.controller.createCliente)
-            .put('/', this.controller.updateCliente)
-            .delete('/', this.controller.deleteCliente)
-       
+            .put('/id', this.controller.updateCliente)
+            .delete('/id', this.controller.deleteCliente)      
     }
 }

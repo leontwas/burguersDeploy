@@ -1,69 +1,59 @@
-import Mysql from '../connections/Mysql.js';
-
+import { query } from 'express'
+import Mysql from '../connection/Mysql.js'
 
 export default class UsuariosDaoMysql extends Mysql {
 
     constructor() {
-        super()
-        this.table = 'usuarios'
+        super();
+        this.query = query
+        this.table = 'usuarios';
         this.#createTable()
     }
-
-    #createTable() {
-        const query = `CREATE TABLE IF NOT EXISTS ${this.table}(
-            id INT PRIMARY KEY,
-            name VARCHAR(100) NOT NULL,
-            age INT NOT NULL            
+        
+        #createTable() {
+        const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
+            usuario_id INT PRIMARY KEY,
+            email VARCHAR(50) NOT NULL,
+            pass VARCHAR(50) NOT NULL
         )`
         this.connection.query(query)
     }
 
-    async getAllUsers() {
-        try {
-            const query = `SELECT * FROM ${this.table}`
-            const [result] = await this.connection.promise().query(query)
-            return result
-        }
-
-        catch (err) {
-            console.log('Problemas al obtener los usuarios')
-            return []
-        }
+    async getAllUsuarios() {
+        const query = `SELECT * FROM ${this.table}`
+        const [results] = await this.connection.promise().query(query);
+        return results      
     }
 
-
-    async getUsuariosById(id) {
-        const query = `SELECT * FROM ${this.table} WHERE id = ?`
-        const [result] = await this.connection.promise().query(query, [id])
-        return result
+    async getUsuariosById(usuario_id) {
+        const query = `SELECT * FROM ${this.table} WHERE ${usuario_id}`;
+        const [results] = await this.connection.promise().query(query);
+        return results
     }
 
-
-    async getUsuariosByApellido(apellido) {
-        const query = `SELECT * FROM ${this.table} WHERE apellido = '${apellido}'`
-        const [result] = await this.connection.promise().query(query)
-        return result
+    async getUsuarioByEmail(email) {
+         const query = `SELECT * FROM ${this.table} WHERE '${email}'`;
+         const [result] = await this.connection.promise().query(query)
+         return result
+}   
+    
+    async createUsuarios(usuario) {     
+      const { usuario_id, email, pass} = usuario 
+      const query = `INSERT INTO ${this.table} VALUES(?,?,?)`
+      const [result] = this.connection.promise().query(query, [usuario_id, email, pass])
+      return result.affectedRows 
     }
 
-    async addUsuarios(userio) {
-        const { id, nombre, apellido, direccion, telefono, email } = usuario
-        const query = `INSERT INTO ${this.table} VALUES (?,?,?,?,?,?)`
-        const [result] = await this.connection.promise().query(query, [id, nombre, apellido, direccion, telefono, email])
-        return result
+    async updateUsuarios(usuario) {
+        const { usuario_id, email, pass } = usuario;
+        const query = `UPDATE ${this.table} SET email = ?, pass = ? WHERE usuario_id = ?`;
+        const [result] = await this.connection.promise().query(query, [email, pass, usuario_id]);
+        return result.affectedRows
     }
 
-
-    async modifyUser(usuario) {
-        const { id, nombre, apellido, direccion, telefono, email } = usuario
-        const query = `UPDATE ${this.table} SET nombre = ?, apellido = ?, direccion = ?, telefono = ?, email = ?, WHERE id = ?`
-        const [result] = await this.connection.promise().query(query, [id, nombre, apellido, direccion, telefono, email])
-        return result
-    }
-
-
-    async deleteUsuario(id) {
-        const query = `DELETE FROM ${this.table} WHERE id = ${id}`
-        const [result] = await this.connection.promise().query(query)
-        return result
+    async deleteUsuario(usuario_id) {
+        const query = `DELETE FROM ${this.table} WHERE usuario_id = ?`;
+        const [result] = await this.connection.promise().query(query, [usuario_id]);
+        return result.affectedRows;      
     }
 }

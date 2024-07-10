@@ -1,5 +1,5 @@
 import MesasControllers from '../controllers/mesas.controllers.js';
-import Routes from './routes.js';
+import Routes from './Routes.js';
 import { Router } from 'express';
 
 export default class MesasRoutes extends Routes {
@@ -15,7 +15,7 @@ export default class MesasRoutes extends Routes {
         .get('/', this.controller.getAllMesas)
         .get('/id', this.controller.getMesaById)
         .post('/', this.controller.createMesa)
-        .put('/', this.controller.updateMesa)
-        .delete('/', this.controller.deleteMesa)
+        .put('/id', this.controller.updateMesas)
+        .delete('/id', this.controller.deleteMesa)
     }
 }

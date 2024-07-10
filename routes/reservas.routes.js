@@ -1,5 +1,5 @@
 import ReservasControllers from '../controllers/reservas.controllers.js'
-import Routes from './routes.js';
+import Routes from './Routes.js';
 import { Router } from 'express';
 
 export default class ReservasRoutes extends Routes {
@@ -12,11 +12,14 @@ export default class ReservasRoutes extends Routes {
 
     getRoutes() {
         this.router
-        .get('/', this.controller.buscarReservaPorApellido)
-        .get('/', this.controller.buscarReservaPorEmail)
-        .get('/', this.controller.buscarReservaPorFecha)
-        .post('/', this.controller.crearReserva)
-        .put('/', this.controller.modificarReserva)
-        .delete('/', this.controller.eliminarReserva)      
-    }
+            .get('/', this.controller.getAllReservas)
+            .get('/:id', this.controller.getReservaById) 
+            .get('/apellido', this.controller.buscarReservaPorApellido)
+            .get('/email', this.controller.buscarReservaPorEmail)
+            .get('/fecha', this.controller.buscarReservaPorFecha)
+            .post('/', this.controller.createReserva)
+            .put('/:id', this.controller.updateReserva) 
+            .delete('/:id', this.controller.deleteReserva); 
+    }  
 }
+

@@ -1,5 +1,5 @@
 import ProductosControllers from '../controllers/productos.controllers.js';
-import Routes from './routes.js';
+import Routes from './Routes.js';
 import { Router } from 'express';
 
 export default class ProductosRoutes extends Routes {
@@ -13,11 +13,11 @@ export default class ProductosRoutes extends Routes {
     getRoutes() {
         this.router
         .get('/', this.controller.getAllProductos)
-        .get('/descripcion', this.controller.getProductosByDescripcion)
         .get('/nombre', this.controller.getProductosByNombre)
+        .get('/id', this.controller.getProductoById)
+        .get('/descripcion', this.controller.getProductosByDescripcion)
         .post('/', this.controller.createProducto)
-        .put('/', this.controller.updateProducto)
-        .delete('/', this.controller.deleteProducto)
-       
+        .put('/id', this.controller.updateProducto)
+        .delete('/id', this.controller.deleteProducto)     
     }
 }

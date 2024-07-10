@@ -1,78 +1,54 @@
-import Mysql from '../mysql.js'
+import { query } from 'express'
+import Mysql from '../connection/Mysql.js'
 
-class MesasDaoMysql {
+export default class MesasDaoMysql extends Mysql  {
     constructor() {
-        this.initialize()
+        super();
+        this.query = query
+        this.table = 'mesas';
+        this.#createTable()
     }
 
-    async initialize() {
-        const mysqlInstance = await Mysql.getInstance()
-        this.mysql = mysqlInstance.connection
-        this.table = 'mesas'
-        await this.#createTable()
-    }
-
-    async #createTable() {
-        try {
-        const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
-        mesa_id INT PRIMARY KEY AUTO_INCREMENT,
-        numero INT NOT NULL,
-        capacidad INT NOT NULL
-    )`
-            await this.mysql.query(query)
-            console.log("Tabla creada o ya existente.")
-        } catch (error) {
-            console.error('Error creating table:', error)
-            throw error
-        }
-    }
+   #createTable() {
+         const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
+            mesa_id INT PRIMARY KEY AUTO_INCREMENT,
+            numero INT NOT NULL,
+            capacidad INT NOT NULL,
+            estado TINYINT(1) DEFAULT 1
+        )`;
+        this.connection.query(query)
+            }
 
     async getAllMesas() {
-        try {
-            const [results] = await this.mysql.query(`SELECT * FROM ${this.table}`)
-            return results
-        } catch (err) {
-            throw err
-        }
+        const query = `SELECT * FROM ${this.table}`
+        const [results] = await this.connection.promise().query(query);
+        return results      
     }
 
-    async getMesasById(mesa_id) {
-        try {
-            const [results] = await this.mysql.query(`SELECT * FROM ${this.table} WHERE mesa_id = ?`, [mesa_id])
-            return results[0]
-        } catch (err) {
-            throw err
-        }
+    async getMesaById(mesa_id) {
+        const query = `SELECT * FROM ${this.table} WHERE ${mesa_id}`;
+        const [results] = await this.connection.promise().query(query);
+        return results
     }
 
-    async createMesa(numero, capacidad) {
-        try {
-            const client = { numero, capacidad };
-            const [result] = await this.mysql.query(`INSERT INTO ${this.table} SET ?`, mesa );
-            return result.insertId;
-        } catch (err) {
-            throw err;
-        }
+    async createMesa(mesa) {
+        const { mesa_id, numero, capacidad, estado } = mesa;
+        const query = `INSERT INTO ${this.table} (mesa_id, numero, capacidad, estado) VALUES (?, ?, ?, ?)`;
+        const [result] = this.connection.promise().query(query, [mesa_id, numero, capacidad, estado])
+        return result.affectedRows 
     }
 
-    async updateMesas(mesa_id, numero, capacidad) {
-        try {
-            const [result] = await this.query
-            (`UPDATE ${this.table} SET numero = ?, capacidad = ? WHERE mesa_id = ?`, [numero, capacidad, mesa_id])
-            return result.affectedRows
-        } catch (err) {
-            throw err
-        }
+    async updateMesa(mesa) {
+        const { mesa_id, numero, capacidad, estado } = mesa;
+        const query = `UPDATE  ${this.table} SET numero = ?, capacidad = ?, estado = ? WHERE mesa_id = ?`;
+        const [result] = await this.connection.promise().query(query, [numero, capacidad, estado, mesa_id]);
+        return result.affectedRows;
+       
     }
 
     async deleteMesa(mesa_id) {
-        try {
-            const [result] = await this.mysql.query(`DELETE FROM ${this.table} WHERE mesa_id = ?`, [mesa_id])
-            return result.affectedRows
-        } catch (err) {
-            throw err
-        }
+        const query = `DELETE FROM ${this.table} WHERE mesa_id = ?`;
+            const [result] = await this.connection.promise().query(query, [mesa_id]);
+            return result.affectedRows;
     }
 }
-
-export default MesasDaoMysql

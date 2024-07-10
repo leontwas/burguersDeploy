@@ -1,5 +1,5 @@
 export default class Producto {
-    constructor(producto_id, nombre, descripcion, precio, stock) {
+    constructor(producto_id = null, nombre, descripcion, precio, stock) {
         this.producto_id = producto_id;
         this.nombre = nombre;
         this.descripcion = descripcion;
