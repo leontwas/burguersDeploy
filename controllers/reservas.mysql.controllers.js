@@ -38,6 +38,48 @@ export default class ReservasMySQLControllers {
         });
     }
 
+    buscarReservaPorApellido = (req, res) => {
+        const { apellido } = req.query;
+        const query = 'SELECT * FROM reservas WHERE apellido LIKE ?';
+
+        connection.query(query, [`%${apellido}%`], (error, results) => {
+            if (error) {
+                console.error('Error al buscar reserva por apellido en MySQL:', error);
+                res.status(500).json({ message: 'Error interno al buscar reserva por apellido' });
+                return;
+            }
+            res.status(200).json(results);
+        });
+    }
+
+    buscarReservaPorEmail = (req, res) => {
+        const { email } = req.query;
+        const query = 'SELECT * FROM reservas WHERE email = ?';
+
+        connection.query(query, [email], (error, results) => {
+            if (error) {
+                console.error('Error al buscar reserva por email en MySQL:', error);
+                res.status(500).json({ message: 'Error interno al buscar reserva por email' });
+                return;
+            }
+            res.status(200).json(results);
+        });
+    }
+
+    buscarReservaPorFecha = (req, res) => {
+        const { fecha } = req.query;
+        const query = 'SELECT * FROM reservas WHERE fecha = ?';
+
+        connection.query(query, [fecha], (error, results) => {
+            if (error) {
+                console.error('Error al buscar reserva por fecha en MySQL:', error);
+                res.status(500).json({ message: 'Error interno al buscar reserva por fecha' });
+                return;
+            }
+            res.status(200).json(results);
+        });
+    }
+    
     createReserva = (req, res) => {
         const nuevaReserva = this.helpers.parseReserva(req.body);
         const query = 'INSERT INTO reservas SET ?';
@@ -86,48 +128,6 @@ export default class ReservasMySQLControllers {
             } else {
                 res.status(404).json({ message: 'Reserva no encontrada' });
             }
-        });
-    }
-
-    buscarReservaPorApellido = (req, res) => {
-        const { apellido } = req.query;
-        const query = 'SELECT * FROM reservas WHERE apellido LIKE ?';
-
-        connection.query(query, [`%${apellido}%`], (error, results) => {
-            if (error) {
-                console.error('Error al buscar reserva por apellido en MySQL:', error);
-                res.status(500).json({ message: 'Error interno al buscar reserva por apellido' });
-                return;
-            }
-            res.status(200).json(results);
-        });
-    }
-
-    buscarReservaPorEmail = (req, res) => {
-        const { email } = req.query;
-        const query = 'SELECT * FROM reservas WHERE email = ?';
-
-        connection.query(query, [email], (error, results) => {
-            if (error) {
-                console.error('Error al buscar reserva por email en MySQL:', error);
-                res.status(500).json({ message: 'Error interno al buscar reserva por email' });
-                return;
-            }
-            res.status(200).json(results);
-        });
-    }
-
-    buscarReservaPorFecha = (req, res) => {
-        const { fecha } = req.query;
-        const query = 'SELECT * FROM reservas WHERE fecha = ?';
-
-        connection.query(query, [fecha], (error, results) => {
-            if (error) {
-                console.error('Error al buscar reserva por fecha en MySQL:', error);
-                res.status(500).json({ message: 'Error interno al buscar reserva por fecha' });
-                return;
-            }
-            res.status(200).json(results);
         });
     }
 }

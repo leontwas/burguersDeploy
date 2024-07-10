@@ -14,7 +14,7 @@ export default class MesasRoutes extends Routes {
         this.router
         .get('/', this.controller.getAllMesas)
         .get('/id', this.controller.getMesaById)
-        .post('/', this.controller.addMesa)
+        .post('/', this.controller.createMesa)
         .put('/id', this.controller.updateMesa)
         .delete('/id', this.controller.deleteMesa)
     }

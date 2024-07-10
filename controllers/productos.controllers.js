@@ -1,40 +1,33 @@
-import productosMock from '../db/mocks/productos.mock.js';
+import ProductosDaoMysql from '../db/daos/productos.dao.mysql.js';
 import ProductosHelpers from '../helpers/productos.helpers.js';
 
 export default class ProductosControllers {
 
     constructor() {
-        this.productos = productosMock;
+        this.productos = ProductosDaoMysql;
         this.helpers = new ProductosHelpers();
     }
 
-    getAllProductos = (req, res) => {
+    getAllProductos = async (req, res) => {
+        const productos = await this.db.getAllProductos()
         res.json(this.productos);
     }
 
-    getProductoById = (req, res) => {
-        const { id } = req.params;
-        const producto = this.productos.find(producto => producto.producto_id === parseInt(id));
-        if (producto) {
-            res.json(producto);
-        } else {
-            res.status(404).send('Producto no encontrado');
-        }
+    getProductoById = async (req, res) => {
+        const { producto_id } = req.params;
+        const producto = await this.db.getProductoById(producto_id)
+        res.json(producto);
     }
 
-    getProductosByNombre = (req, res) => {
+    getProductosByNombre = async (req, res) => {
         const { nombre } = req.params;
-        const productos = this.productos.filter(producto => producto.nombre.toLowerCase().includes(nombre.toLowerCase()));
-        if (productos.length > 0) {
-            res.json(productos);
-        } else {
-            res.status(404).send('Producto no encontrado');
-        }
+        const productos = await this.productos.getProductosByNombre(nombre)
+        res.json(productos);
     }
 
-    getProductosByDescripcion = (req, res) => {
+    getProductosByDescripcion = async (req, res) => {
         const { descripcion } = req.params;
-        const productos = this.productos.filter(producto => producto.descripcion.toLowerCase().includes(descripcion.toLowerCase()));
+        const productos = await this.productos.filter(producto => producto.descripcion.toLowerCase().includes(descripcion.toLowerCase()));
         if (productos.length > 0) {
             res.json(productos);
         } else {
@@ -42,28 +35,21 @@ export default class ProductosControllers {
         }
     }
 
-    createProducto = (req, res) => {
-        console.log(req.body.producto_id, req.body.nombre, req.body.descripcion, req.body.precio, req.body.stock);
-        const producto = this.helpers.parseProducto(req.body);
-        this.productos.push(producto);
-        res.send('Producto creado exitosamente');
+    createProducto = async (req, res) => {
+       producto = this.helpers.parseProducto(req.body);
+       const result = await this.db.createProducto(producto)
+       res.json(result);
     } 
 
-    updateProducto = (req, res) => {
-        const { id } = req.params;
-        const productoIndex = this.productos.findIndex(producto => producto.producto_id === parseInt(id));
-        if (productoIndex !== -1) {
-            const updatedProducto = this.helpers.parseProducto(req.body);
-            this.productos[productoIndex] = { ...this.productos[productoIndex], ...updatedProducto };
-            res.send('Producto actualizado exitosamente');
-        } else {
-            res.status(404).send('Producto no encontrado');
-        }
+    updateProducto = async (req, res) => {
+        const producto = this.helpers.parseProducto(req.body);
+        const result = await this.db.updateProducto(producto)
+        res.json(result);
     }
 
-    deleteProducto = (req, res) => {
-        const { id } = req.params;
-        this.productos = this.productos.filter(producto => producto.producto_id !== parseInt(id));
-        res.send('Producto eliminado exitosamente');
+    deleteProducto = async (req, res) => {
+        const { producto_id } = this.helpers.parseProducto(req.body)
+        const result = await this.db.deleteUsuarios(producto_id)
+        res.json(result)
     }
 }

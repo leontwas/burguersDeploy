@@ -15,13 +15,13 @@ export default class UsuariosControllers {
 
     getUsuarioById = async (req, res) => {
         const { usuario_id } = req.params
-        const usuario = await this.db.getUsuarioById()
+        const usuario = await this.db.getUsuarioById(usuario_id)
         res.json(usuario)
     }
 
 getUsuariosByEmail = async (req, res) => {
     const { email } = req.params
-    const usuario = await this.db.getUsuariosByEmail()
+    const usuario = await this.db.getUsuariosByEmail(email)
     res.json(usuario)
 }
 
