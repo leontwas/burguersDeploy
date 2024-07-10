@@ -1,9 +1,14 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const config = {
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: '',
-    database: 'gloriosaburguers'
+    host: process.env.HOST_DB,
+    user: process.env.USER_DB,
+    password: process.env.PASS_DB,
+    database: process.env.DB_NAME,
+    port: process.env.PORT_DB,
+    connectTimeout: 10000  // Aumenta el tiempo de espera a 10 segundos
 };
 
 export default config;
