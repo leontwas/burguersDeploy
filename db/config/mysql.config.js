@@ -7,10 +7,11 @@
 // };
 
 const config = {
-    host: process.env.HOST_DB,
-    user: process.env.USER_DB,
-    password: process.env.PASS_DB,
-    database:process.env.DB
+    host: process.env.HOST_DB || 'localhost',
+    port: process.env.PORT || 3000,
+    user: process.env.USER_DB || 'root',
+    password: process.env.PASS_DB || 'root',
+    database:process.env.DB || 'hamburgueseria'
 }
 
 //    const config = {
