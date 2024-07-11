@@ -1,13 +1,13 @@
 /* Estilos personalizados */
+.cancelacionForm {
+    background-color: #ce0505;
+}
 
 body {
     background-color: #f8f9fa;
     font-family: Arial, sans-serif;
 }
 
-.cancelacionForm {
-    background-color: #ce0505;
-}
 
 .container {
     max-width: 800px;
