@@ -26,7 +26,7 @@ const showProducts = (products) => {
 
 
 
-fetch('https://burguersdeploy-production.up.railway.app/productos')
+fetch('http://burguers-deploy.vercel.app/productos')
   .then(res => res.json())
   .then(res => showProducts(res))
   .catch(err => console.log(err))
