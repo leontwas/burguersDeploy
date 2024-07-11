@@ -33,25 +33,25 @@
 
         <section class="bg-white bg-opacity-75 text-black p-5">
             <h3>Agregar Producto:</h3>
-            <form enctype="multipart/form-data" action="./products" method="POST">
+            <form enctype="multipart/form-data" action="../routes/productos.routes.js" method="POST">
                 <div class="form-floating mb-3">
-                    <input name="name" type="text" class="form-control" id="name" placeholder="Pan" />
-                    <label for="name">Nombre</label>
+                    <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Pan" />
+                    <label for="nombre">Nombre</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input name="price" type="text" class="form-control" id="price" placeholder="Pan" />
-                    <label for="price">Precio</label>
+                    <input name="descripcion" type="text" class="form-control" id="descripcion" placeholder="Pan" />
+                    <label for="descripcion">Descripción</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input name="precio" type="text" class="form-control" id="precio" placeholder="Pan" />
+                    <label for="precio">Precio</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input name="stock" type="text" class="form-control" id="stock" placeholder="Pan" />
                     <label for="stock">Stock</label>
-                </div>
-
-                <div class="mb-4">
-                    <label for="image" class="form-label">Imagen</label>
-                    <input name="image" class="form-control" type="file" id="image" />
                 </div>
 
                 <button class="btn btn-success">Agregar</button>
