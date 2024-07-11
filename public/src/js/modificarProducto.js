@@ -19,12 +19,12 @@ const modifyButtonHandleClick = (e) => {
     }
 
     const body = {
-        name: updInputName.value,
-        price: parseFloat(updInputPrice.value),
+        nombre: updInputName.value,
+        precio: parseFloat(updInputPrice.value),
         stock: updInputStock.value
     }
 
-    const url = './products/' + updInputId.value
+    const url = './productos/id' + updInputId.value
 
     fetch(url, {
         method: "PUT",
