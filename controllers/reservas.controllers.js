@@ -9,13 +9,13 @@ export default class ReservasControllers {
         }
 
         getAllReservas = async (req, res) => {
-                const usuarios = await this.db.getAllUsuarios()
+                const usuarios = await this.db.getAllReservas()
                 res.json(reservas);
                 }
 
         getReservaById = async (req, res) => {
                 const { reserva_id } = req.params;
-                const reserva = await this.db.getReservaById
+                const reserva = await this.db.getReservaById()
                 res.json(reserva);
         }
         buscarReservaPorApellido = async (req, res) => {
