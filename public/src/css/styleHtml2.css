@@ -1,7 +1,14 @@
 /* Estilos personalizados */
-.cancelacionForm {
-    background-color: #ce0505;
+.formulario {
+    background-color: #4846b1;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
+    .mb-4 {
+        background-color: #ce0505;
+    }
+
 
 body {
     background-color: #f8f9fa;
