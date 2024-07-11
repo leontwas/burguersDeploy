@@ -1,24 +1,34 @@
-const deleteButton = document.getElementById('delete-button')
-const deleteInput = document.getElementById('delete-id')
-
+const deleteButton = document.getElementById('delete-button');
+const deleteInput = document.getElementById('delete-id');
 
 const deleteButtonHandleClick = (e) => {
+    e.preventDefault();
 
-    e.preventDefault()
+    const { value } = deleteInput;
 
-    const { value } = deleteInput
+    if (value.length === 0) {
+        return alert('Debe ingresar un valor');
+    }
 
-    if (value.length === 0)
-        return alert('Debe ingresar un valor')
-
-    const url = './productos/id' + value
+    const url = `../Routes/productos.routes/${value}`;
 
     fetch(url, { method: "DELETE" })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('Error en la eliminación');
+            }
+            return res.json();
+        })
         .then(res => errorCheck(res))
-        .catch(err => alert(err))
-}
+        .catch(err => alert(err.message));
+};
 
+const errorCheck = (res) => {
+    if (res.error) {
+        alert('Error: ' + res.error);
+    } else {
+        alert('Producto eliminado con éxito');
+    }
+};
 
-
-deleteButton.addEventListener('click', deleteButtonHandleClick)
+deleteButton.addEventListener('click', deleteButtonHandleClick);
