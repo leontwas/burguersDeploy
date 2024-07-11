@@ -6,6 +6,13 @@
     margin-bottom: 20px;
 }
 
+.formulario {
+    background-color: #b14646;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
 body {
     background-color: #f8f9fa;
     font-family: Arial, sans-serif;
