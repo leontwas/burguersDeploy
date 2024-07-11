@@ -29,7 +29,7 @@ const showProducts = (products) => {
 
 
 
-fetch('./products')
+fetch('./productos')
   .then(res => res.json())
   .then(res => showProducts(res))
   .catch(err => console.log(err))
