@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import ReservasRoutes from '../routes/reservas.routes.js';
 import ProductosRoutes from '../routes/productos.routes.js';
 import ClientesRoutes from '../routes/clientes.routes.js';
