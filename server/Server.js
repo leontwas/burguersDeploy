@@ -24,7 +24,7 @@ export default class Server {
         const productos = new ProductosRoutes();
         const clientes = new ClientesRoutes();
         const mesas = new MesasRoutes();
-        Server.app.use('/reservas', reservas.router);
+        Server.app.use('/reservas2', reservas.router);
         Server.app.use('/productos', productos.router);
         Server.app.use('/clientes', clientes.router);
         Server.app.use('/mesas', mesas.router);
