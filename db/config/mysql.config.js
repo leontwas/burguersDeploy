@@ -8,7 +8,7 @@ const config = {
     password: process.env.PASS_DB,
     database: process.env.DB_NAME,
     port: process.env.PORT_DB,
-    connectTimeout: 10000  // Aumenta el tiempo de espera a 10 segundos
+    connectTimeout: 10000  
 };
 
 export default config;

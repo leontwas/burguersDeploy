@@ -48,7 +48,7 @@ export default class MesasDaoMysql extends Mysql  {
 
     async deleteMesa(mesa_id) {
         const query = `DELETE FROM ${this.table} WHERE mesa_id = ?`;
-            const [result] = await this.connection.promise().query(query, [mesa_id]);
-            return result.affectedRows;
+        const [result] = await this.connection.promise().query(query, [mesa_id]);
+        return result.affectedRows;
     }
 }
