@@ -10,6 +10,7 @@ export default class Server {
     static middlewares(){
         Server.app.use(express.json())
         Server.app.use(express.urlencoded({ extended: true }))
+        Server.app.use(cors())
     }
 
                                                                                                                                                                                                                                                                                                                                                                                                                                     
