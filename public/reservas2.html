@@ -13,16 +13,22 @@
     <link rel="stylesheet" href="/src/css/styleFooter.css">
     <link rel="stylesheet" href="./src/css/styleHtml2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #8B0000, #B22222);
+        }
+        .formulario {
+            background-color: #6B0808;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <title>Reservas</title>
-    <style>
-        body {
-            background: linear-gradient(to bottom right, #8B0000, #B22222);
-        }
-    </style>
     <script>
         $(document).ready(function() {
             $('#fechaReserva').datepicker({
@@ -47,50 +53,65 @@
         </nav>
     </header>
     <div class="container mt-5">
-        <h1 class="mb-4">Gestión de Reservas</h1>
 
-        <form id="reservaForm">
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
-            </div>
-            <div class="form-group">
-                <label for="apellido">Apellido</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" required>
-            </div>
-            <div class="form-group">
-                <label for="direccion">Dirección</label>
-                <input type="text" class="form-control" id="direccion" name="direccion" required>
-            </div>
-            <div class="form-group">
-                <label for="telefono">Teléfono</label>
-                <input type="text" class="form-control" id="telefono" name="telefono" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="cantidadComensales">Cantidad de Comensales</label>
-                <select class="form-control" id="cantidadComensales" name="cantidadComensales" required>
-                    <option value="">Seleccionar</option>
-                    <!-- Opciones del select -->
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="mesa">Mesa Asignada</label>
-                <input type="text" class="form-control" id="mesa" name="mesa" readonly>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="estado" name="estado" checked>
-                <label class="form-check-label" for="estado">Activa</label>
-            </div>
-            <div class="form-group">
-                <label for="fechaReserva">Fecha de Reserva</label>
-                <input type="text" class="form-control" id="fechaReserva" name="fechaReserva" required>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Crear Reserva</button>
-        </form>
+        <!-- Formulario de Reserva -->
+        <div class="formulario">
+            <h1 class="mb-4">Crear Reserva</h1>
+            <form id="reservaForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido" required>
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="fechaReserva">Fecha de Reserva</label>
+                    <input type="text" class="form-control" id="fechaReserva" name="fechaReserva" required>
+                </div>
+                <div class="form-group">
+                    <label for="cantidadComensales">Cantidad de Comensales</label>
+                    <select class="form-control" id="cantidadComensales" name="cantidadComensales" required>
+                        <option value="">Seleccionar</option>
+                        <!-- Opciones del select -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mesa">Mesa Asignada</label>
+                    <input type="text" class="form-control" id="mesa" name="mesa" readonly>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="estado" name="estado" checked>
+                    <label class="form-check-label" for="estado">Activa</label>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Crear Reserva</button>
+            </form>
+        </div>
+
+        <!-- Formulario de Cancelación -->
+        <div class="formulario">
+            <h1 class="mb-4">Cancelar Reserva</h1>
+            <form id="cancelacionForm">
+                <div class="form-group">
+                    <label for="idReserva">ID de Reserva</label>
+                    <input type="text" class="form-control" id="idReserva" name="idReserva" required>
+                </div>
+                <button type="submit" class="btn btn-danger mt-3">Cancelar Reserva</button>
+            </form>
+        </div>
 
         <hr>
 
