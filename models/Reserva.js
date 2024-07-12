@@ -1,5 +1,5 @@
 export default class Reserva {
-  constructor(reserva_id = null, cliente_id = null, mesa_id = null, fecha_reserva, estado = true) {
+  constructor(reserva_id, cliente_id, mesa_id, fecha_reserva, estado) {
     this.reserva_id = reserva_id;
     this.cliente_id = cliente_id;
     this.mesa_id = mesa_id;
