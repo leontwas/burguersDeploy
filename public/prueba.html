@@ -5,7 +5,16 @@
     <meta charset="UTF-8" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chicle&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/css/fuentes.css">
+    <link rel="stylesheet" href="./src/css/styleHeader.css">
+    <link rel="stylesheet" href="./src/css/styleFooter.css">
     <title>Document</title>
     <style>
         main {
@@ -25,6 +34,19 @@
 </head>
 
 <body>
+    <header>
+        <h1 class="bungee-regularspice-">Gloriosa Burgers</h1>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Inicio</a></li>
+                <li><a href="./productos.html">Productos</a></li>               
+                <li><a href="./reservas.html">Reservas</a></li>
+                <li><a href="./nosotros.html">Nosotros</a></li>
+                <li><a href="https://www.facebook.com"><i class="fab fa-facebook-square"></i></a></li>
+                <li><a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+        </nav>
+    </header> 
     <main>
         <section class="p-5 my-0">
             <h3>Productos:</h3>
@@ -33,15 +55,20 @@
 
         <section class="bg-white bg-opacity-75 text-black p-5">
             <h3>Agregar Producto:</h3>
-            <form enctype="multipart/form-data" action="./products" method="POST">
+            <form enctype="multipart/form-data" action="/addProd" method="POST">
                 <div class="form-floating mb-3">
-                    <input name="name" type="text" class="form-control" id="name" placeholder="Pan" />
-                    <label for="name">Nombre</label>
+                    <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Pan" />
+                    <label for="nombre">Nombre</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input name="price" type="text" class="form-control" id="price" placeholder="Pan" />
-                    <label for="price">Precio</label>
+                    <input name="descripcion" type="text" class="form-control" id="descripcion" placeholder="Pan" />
+                    <label for="descripcion">Descripción</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input name="precio" type="text" class="form-control" id="precio" placeholder="Pan" />
+                    <label for="precio">Precio</label>
                 </div>
 
                 <div class="form-floating mb-3">
@@ -49,16 +76,11 @@
                     <label for="stock">Stock</label>
                 </div>
 
-                <div class="mb-4">
-                    <label for="image" class="form-label">Imagen</label>
-                    <input name="image" class="form-control" type="file" id="image" />
-                </div>
-
                 <button class="btn btn-success">Agregar</button>
             </form>
         </section>
 
-        <section class="bg-white bg-opacity-50 text-black p-5">
+            <section class="bg-white bg-opacity-50 text-black p-5" action="/updProd:id" method="PUT">
 
             <h3>Modificar Producto:</h3>
             <form>
@@ -68,7 +90,7 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input name="name" type="text" class="form-control" id="update-name" placeholder="Nombre" />
+                    <input name="nombre" type="text" class="form-control" id="update-name" placeholder="Nombre" />
                     <label for="update-name">Nombre</label>
                 </div>
 
@@ -86,7 +108,7 @@
             </form>
         </section>
 
-        <section class="bg-black bg-opacity-25 p-5">
+        <section class="bg-black bg-opacity-25 p-5" action="/clr:id" method="delete-id">
             <h3>Borrar Producto:</h3>
             <form>
                 <div class="form-floating mb-3">
@@ -101,10 +123,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <script src="js/fns.js"></script>
-    <script src="js/showProducts.js"></script>
-    <script src="js/deleteProduct.js"></script>
-    <script src="js/modifyProduct.js"></script>
+    <script src="./src/js/agregarProducto.js"></script>
+    <script src="./src/js/mostrarProducto.js"></script>
+    <script src="./src/js/eliminarProducto.js"></script>
+    <script src="./src/js/mostrarProducto.js"></script>
+    <footer>
+        <div class="grid-container">
+            <div class="grid-item kalam-regular">Preguntas frecuentes</div>
+            <div class="grid-item kalam-regular">Sucursales</div>
+            <div class="grid-item kalam-regular">Quienes somos?</div>
+            <div class="grid-item kalam-regular">Libro de quejas</div>
+            <div class="grid-item kalam-regular">Asuntos Legales</div>
+            <div class="grid-item kalam-regular">Novedades</div> 
+            <div class="grid-item kalam-regular">Contacto</div>  
+            <div class="grid-item kalam-regular">Servicios</div> 
+            <div class="grid-item kalam-regular">Políticas de privacidad</div>        
+        </div>      
+        <div class="copyright kalam-regular">&copy; 2024 Gloriosa Burgers. Todos los derechos reservados.</div>
+    </footer>
 </body>
-
 </html>
