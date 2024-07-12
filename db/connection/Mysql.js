@@ -10,7 +10,7 @@ export default class Mysql {
                 console.error('No se pudo conectar a la base de datos:', err);
                 return;
             }
-            console.log('Conectado a la base de datos MySQL!');
+            console.log('Conectado a la base de datos MySQL');
         });
     }
 }
