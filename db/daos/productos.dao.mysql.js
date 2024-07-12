@@ -12,10 +12,10 @@ export default class ProductosDaoMysql extends Mysql {
  #createTable() {
         const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
         producto_id INT PRIMARY KEY AUTO_INCREMENT,
-        nombre VARCHAR(100) NOT NULL,
+        nombre VARCHAR(100),
         descripcion TEXT,
-        precio DECIMAL(10, 2) NOT NULL,
-        stock INT NOT NULL
+        precio DECIMAL(10, 2),
+        stock INT(11)
     )`
     this.connection.query(query)  
     }
@@ -42,7 +42,7 @@ export default class ProductosDaoMysql extends Mysql {
 
     async createProducto(producto) {
             const { producto_id, nombre, descripcion, precio, stock } =  producto
-            const query = `INSERT INTO ${this.table} VALUES (?,?,?,?,?)`
+            const query = `INSERT INTO ${this.table} VALUES (?, ?, ?, ?, ?)`
             const [result] = this.connection.promise().query(query, [producto_id, nombre, descripcion, precio, stock])
             return result.affectedRows 
     }

@@ -12,9 +12,9 @@ export default class UsuariosDaoMysql extends Mysql {
         
         #createTable() {
         const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
-            usuario_id INT PRIMARY KEY,
-            email VARCHAR(50) NOT NULL,
-            pass VARCHAR(50) NOT NULL
+            usuario_id INT(11) PRIMARY KEY,
+            email VARCHAR(50),
+            pass VARCHAR(50)
         )`
         this.connection.query(query)
     }
@@ -38,8 +38,8 @@ export default class UsuariosDaoMysql extends Mysql {
 }   
     
     async createUsuarios(usuario) {     
-      const { usuario_id, email, pass} = usuario 
-      const query = `INSERT INTO ${this.table} VALUES(?,?,?)`
+      const { usuario_id, email, pass } = usuario 
+      const query = `INSERT INTO ${this.table} VALUES(?, ?, ?)`
       const [result] = this.connection.promise().query(query, [usuario_id, email, pass])
       return result.affectedRows 
     }
