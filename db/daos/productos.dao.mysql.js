@@ -11,11 +11,11 @@ export default class ProductosDaoMysql extends Mysql {
 
  #createTable() {
         const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
-        producto_id INT PRIMARY KEY AUTO_INCREMENT,
-        nombre VARCHAR(100) NOT NULL,
+        producto_id INT(11) PRIMARY KEY AUTO_INCREMENT,
+        nombre VARCHAR(100),
         descripcion TEXT,
-        precio DECIMAL(10, 2) NOT NULL,
-        stock INT NOT NULL
+        precio DECIMAL(10, 2),
+        stock INT(11)
     )`
     this.connection.query(query)  
     }

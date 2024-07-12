@@ -13,11 +13,11 @@ export default class ReservasDaoMysql extends Mysql {
 
    #createTable() {
         const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
-            reserva_id int(11) NOT NULL,
-            cliente_id int(11) NOT NULL,
-            mesa_id int(11) NOT NULL,
-            fecha_reserva datetime NOT NULL,
-            estado tinyint(1) NOT NULL
+            reserva_id INT(11),
+            cliente_id INT(11),
+            mesa_id INT(11),
+            fecha_reserva DATETIME(10),
+            estado TINYINT(1)
             FOREIGN KEY (cliente_id) REFERENCES Clientes(cliente_id),
             FOREIGN KEY (mesa_id) REFERENCES Mesas(mesa_id))`;
          this.connection.query(query)

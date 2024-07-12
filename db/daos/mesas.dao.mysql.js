@@ -11,9 +11,9 @@ export default class MesasDaoMysql extends Mysql  {
 
    #createTable() {
          const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
-            mesa_id INT PRIMARY KEY AUTO_INCREMENT,
-            numero INT NOT NULL,
-            capacidad INT NOT NULL,
+            mesa_id INT(2) PRIMARY KEY AUTO_INCREMENT,
+            numero INT(2),
+            capacidad INT(2),
             estado TINYINT(1) DEFAULT 1
         )`;
         this.connection.query(query)
