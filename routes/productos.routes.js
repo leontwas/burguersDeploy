@@ -17,7 +17,7 @@ export default class ProductosRoutes extends Routes {
         .get('/id', this.controller.getProductoById)
         .get('/descripcion', this.controller.getProductosByDescripcion)
         .post('/', this.controller.createProducto)
-        .put('/id', this.controller.updateProducto)
+        .put('/updProd:id', this.controller.updateProducto)
         .delete('/id', this.controller.deleteProducto)     
     }
 }

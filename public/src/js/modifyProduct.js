@@ -24,7 +24,7 @@ const modifyButtonHandleClick = (e) => {
         stock: updInputStock.value
     }
 
-    const url = './products/' + updInputId.value
+    const url = '/updProd:id/' + updInputId.value
 
     fetch(url, {
         method: "PUT",
