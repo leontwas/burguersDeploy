@@ -13,10 +13,10 @@ export default class UsuariosRoutes extends Routes {
     getRoutes() {
         this.router
             .get('/', this.controller.getAllUsuarios)
-            .get('/id', this.controller.getUsuarioById)
+            .get('/:id', this.controller.getUsuarioById)
             .get('/nombre', this.controller.getUsuariosByEmail)
             .post('/', this.controller.createUsuarios)
-            .put('/id', this.controller.updateUsuarios)
-            .delete('/id', this.controller.deleteUsuarios)      
+            .put('/:id', this.controller.updateUsuarios)
+            .delete('/:id', this.controller.deleteUsuarios)      
     }
 }

@@ -15,6 +15,13 @@ export default class ReservasHelpers {
     }
 
     parseBoolean(value) {
-        return value === 'true' || value === true;
+        if (typeof value === 'boolean') {
+            return value;
+        }
+        if (typeof value === 'string') {
+            value = value.toLowerCase();
+            return value === 'true' || value === '1';
+        }
+        return Boolean(value);
     }
 }

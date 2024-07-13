@@ -13,11 +13,11 @@ export default class ProductosRoutes extends Routes {
     getRoutes() {
         this.router
         .get('/', this.controller.getAllProductos)
-        .get('/nombre', this.controller.getProductosByNombre)
-        .get('/id', this.controller.getProductoById)
-        .get('/descripcion', this.controller.getProductosByDescripcion)
-        .post('/', this.controller.createProducto)
-        .put('/updProd:id', this.controller.updateProducto)
-        .delete('/id', this.controller.deleteProducto)     
+        .get('/nombre/:nombre', this.controller.getProductosByNombre)
+        .get('/:id', this.controller.getProductoById)
+        .get('/descripcion/:descripcion', this.controller.getProductosByDescripcion)
+        .post('/productos', this.controller.createProducto)
+        .put('/:id', this.controller.updateProducto)
+        .delete('/:id', this.controller.deleteProducto)
     }
 }
