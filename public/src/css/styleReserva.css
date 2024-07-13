@@ -1,6 +1,5 @@
 body {
-  background: radial-gradient(circle at 0.2% 1.8%, rgb(88, 0, 0) 0%, rgb(255, 90, 8) 100.2%);
-  color: rgb(250, 248, 246);
+  background: radial-gradient rgb(88, 0, 0);
   min-width: 320px;
 }
 

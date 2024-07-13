@@ -40,6 +40,7 @@
             <li><a href="productos.html">Productos</a></li>
             <li><a href="novedades.html">Novedades</a></li>  
             <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="/crud.html">CRUD</a></li>
             <li><a href="https://www.facebook.com"><i class="fab fa-facebook-square"></i></a></li>
             <li><a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a></li>
         </ul>
@@ -51,7 +52,6 @@
     </div>
     <div class="contenedor">
         <section class="bg-black bg-opacity-75 text-black p-5">
-            <h3>Hacer Reserva:</h3>
             <form enctype="multipart/form-data" action="./reservas" method="POST">
                 <div class="form-floating mb-3">
                     <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" required />
@@ -118,7 +118,7 @@
             <img src="./assets/Imagenes/reservas/reservado.png" alt="reservado.png">
         </div>
         <section class="bg-black bg-opacity-25 p-5">
-            <h3>Cancelar Reserva:</h3>
+            <h3 class="kalam-bold">Cancelar Reserva:</h3>
             <form action="./cancelar_reserva" method="POST">
                 <div class="form-floating mb-3">
                     <input name="email" type="email" class="form-control" id="cancel-email" placeholder="Correo electrónico" required />

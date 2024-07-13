@@ -6,6 +6,7 @@ const mock = [
           precio: 1300.00,
           stock: 500
         },
+        
         {
           producto_id: 2,
           nombre: 'Meal Sky',
@@ -13,6 +14,7 @@ const mock = [
           precio: 1800.00,
           stock: 600
         },
+
         {
           producto_id: 3,
           nombre: 'Orale Spicy',
