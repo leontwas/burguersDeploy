@@ -8,11 +8,10 @@ export default class Server {
     static app = express();
 
     static middlewares(){
-        Server.app.use(express.json())
-        Server.app.use(express.urlencoded({ extended: true }))
+        Server.app.use(express.json());
+        Server.app.use(express.urlencoded({ extended: true }));
     }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                    
     static runServer(port) {
         Server.app.listen(port, () =>
             console.log(`Escuchando en http://localhost:${port}`)
@@ -37,4 +36,5 @@ export default class Server {
         Server.runServer(port);
     }
 }
+
 
