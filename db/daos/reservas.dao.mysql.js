@@ -18,9 +18,7 @@ export default class ReservasDaoMysql extends Mysql {
                 mesa_id INT(11),
                 fecha_reserva DATETIME,
                 estado TINYINT(1),
-                PRIMARY KEY (reserva_id),
-                FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id),
-                FOREIGN KEY (mesa_id) REFERENCES mesas(mesa_id)
+                PRIMARY KEY (reserva_id),   
             )`;
         this.connection.query(query, (err, result) => {
             if (err) {

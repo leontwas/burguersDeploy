@@ -15,8 +15,7 @@ export default class MesasDaoMysql extends Mysql  {
                 mesa_id INT(11) PRIMARY KEY AUTO_INCREMENT,
                 numero INT(2),
                 capacidad INT(2),
-                estado TINYINT(1) DEFAULT 1
-            )`;
+                estado TINYINT(1) DEFAULT 1)`;
         
         this.connection.query(query, (err, result) => {
             if (err) {
