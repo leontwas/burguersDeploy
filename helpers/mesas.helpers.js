@@ -1,9 +1,9 @@
 export default class MesasHelpers {
-    parseMesa(data) {
+    parseMesa(data = {}) {
         return {
-            mesa_id: parseInt(data.mesa_id) || null,
-            numero: parseInt(data.numero) || 0,
-            capacidad: parseInt(data.capacidad) || 0,
+            mesa_id: data.mesa_id ? parseInt(data.mesa_id) : null,
+            numero: data.numero ? parseInt(data.numero) : 0,
+            capacidad: data.capacidad ? parseInt(data.capacidad) : 0,
             disponible: this.parseBoolean(data.disponible)
         };
     }
@@ -19,3 +19,4 @@ export default class MesasHelpers {
         return Boolean(value);
     }
 }
+

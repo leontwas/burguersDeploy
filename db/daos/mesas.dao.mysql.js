@@ -9,15 +9,24 @@ export default class MesasDaoMysql extends Mysql  {
         this.#createTable()
     }
 
-   #createTable() {
-         const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
-            mesa_id INT(11) PRIMARY KEY AUTO_INCREMENT,
-            numero INT(2),
-            capacidad INT(2),
-            estado TINYINT(1) DEFAULT 1)`;
-        this.connection.query(query)
-        console.log('Tabla mesas creada con éxito!')
+    #createTable() {
+        const query = `
+            CREATE TABLE IF NOT EXISTS ${this.table} (
+                mesa_id INT(11) PRIMARY KEY AUTO_INCREMENT,
+                numero INT(2),
+                capacidad INT(2),
+                estado TINYINT(1) DEFAULT 1
+            )`;
+        
+        this.connection.query(query, (err, result) => {
+            if (err) {
+                console.error('Error al crear la tabla mesas:', err);
+            } else {
+                console.log('Tabla mesas creada con éxito!');
             }
+        });
+    }
+    
 
     async getAllMesas() {
         const query = `SELECT * FROM ${this.table}`

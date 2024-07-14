@@ -1,6 +1,7 @@
 import { query } from 'express';
 import Mysql from '../connection/Mysql.js';
 
+
 export default class ReservasDaoMysql extends Mysql {
     constructor() {
         super();

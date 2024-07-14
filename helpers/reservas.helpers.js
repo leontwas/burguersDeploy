@@ -1,9 +1,9 @@
 export default class ReservasHelpers {
-    parseReserva(data) {
+    parseReserva(data = {}) {
         return {
-            reserva_id: parseInt(data.reserva_id) || null,
-            cliente_id: parseInt(data.cliente_id) || null,
-            mesa_id: parseInt(data.mesa_id) || null,
+            reserva_id: data.reserva_id ? parseInt(data.reserva_id) : null,
+            cliente_id: data.cliente_id ? parseInt(data.cliente_id) : null,
+            mesa_id: data.mesa_id ? parseInt(data.mesa_id) : null,
             fecha_reserva: this.parseDate(data.fecha_reserva),
             estado: this.parseBoolean(data.estado)
         };
@@ -11,7 +11,7 @@ export default class ReservasHelpers {
 
     parseDate(date) {
         const parsedDate = new Date(date);
-        return isNaN(parsedDate) ? null : parsedDate;
+        return isNaN(parsedDate.getTime()) ? null : parsedDate;
     }
 
     parseBoolean(value) {

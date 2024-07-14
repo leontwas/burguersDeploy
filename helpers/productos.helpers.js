@@ -1,11 +1,11 @@
 export default class ProductosHelpers {
-    parseProducto(data) {
+    parseProducto(data = {}) {
         return {
-            producto_id: parseInt(data.producto_id) || null,
-            nombre: String(data.nombre) || '',
-            descripcion: String(data.descripcion) || '',
-            precio: parseFloat(data.precio) || 0.0,
-            stock: parseInt(data.stock) || 0
+            producto_id: data.producto_id ? parseInt(data.producto_id) : null,
+            nombre: data.nombre ? String(data.nombre) : '',
+            descripcion: data.descripcion ? String(data.descripcion) : '',
+            precio: data.precio ? parseFloat(data.precio) : 0.0,
+            stock: data.stock ? parseInt(data.stock) : 0
         };
     }
 }

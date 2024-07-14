@@ -1,5 +1,5 @@
 import ClientesControllers from '../controllers/clientes.controllers.js';
-import Routes from '../routes/Routes.js';
+import Routes from './Routes.js';
 import { Router } from 'express';
 
 

@@ -3,11 +3,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const config = {
-    host: process.env.HOST_DB,
-    user: process.env.USER_DB,
-    password: process.env.PASS_DB,
-    database: process.env.DB_NAME,
-    port: process.env.PORT_DB,
+    host: 'sql3.freesqldatabase.com',
+    user: 'sql3718809',
+    password: '1PtpLX6Yiz',
+    database:'sql3718809',
+    port: 3306,
     connectTimeout: 10000  // Aumenta el tiempo de espera a 10 segundos
 };
 

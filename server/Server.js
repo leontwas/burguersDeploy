@@ -1,5 +1,5 @@
 import express from 'express';
-import ReservasRoutes from '../routes/reservas.routes.js';
+import ReservasRoutes from '../routes/reservas.routes.js'
 import ProductosRoutes from '../routes/productos.routes.js';
 import ClientesRoutes from '../routes/clientes.routes.js';
 import MesasRoutes from '../routes/mesas.routes.js';
