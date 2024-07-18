@@ -10,7 +10,7 @@ export default class ClientesDaoMysql extends Mysql {
     }
 
     #createTable() {
-        const query = `CREATE TABLE IF NOT EXISTS ${this.table} (
+        const query = `USE sql3718809, CREATE TABLE IF NOT EXISTS ${this.table} (
                 cliente_id INT(11) PRIMARY KEY AUTO_INCREMENT,
                 nombre VARCHAR(100),
                 apellido VARCHAR(100),

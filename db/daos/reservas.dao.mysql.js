@@ -11,7 +11,7 @@ export default class ReservasDaoMysql extends Mysql {
     }
 
     #createTable() {
-        const query = `
+        const query = `USE sql3718809,
             CREATE TABLE IF NOT EXISTS ${this.table} (
                 reserva_id INT(11) AUTO_INCREMENT,
                 cliente_id INT(11),

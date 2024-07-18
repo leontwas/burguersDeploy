@@ -11,7 +11,7 @@ export default class UsuariosDaoMysql extends Mysql {
     }
     
     #createTable() {
-        const query = `
+        const query = `USE sql3718809,
             CREATE TABLE IF NOT EXISTS ${this.table} (
                 usuario_id INT(11) PRIMARY KEY AUTO_INCREMENT,
                 email VARCHAR(50),
